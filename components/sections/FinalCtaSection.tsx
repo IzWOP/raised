@@ -58,7 +58,7 @@ export default function FinalCtaSection({
             color: "#FFFFFF",
             margin: 0,
             textWrap: "balance",
-          } as React.CSSProperties}
+          }}
         >
           {finalCta.h2}
         </h2>
