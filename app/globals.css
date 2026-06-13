@@ -219,6 +219,8 @@ body {
   }
   [data-strip-track] > * { width: 100% !important; }
 
-  /* Tame oversized desktop side-padding on inner containers */
-  section { padding-left: 16px; padding-right: 16px; }
+  /* Override horizontal padding on all inner wrappers (keeps top/bottom) */
+  [data-container] { padding-left: 20px !important; padding-right: 20px !important; }
+  /* Hero and FinalCTA carry their 40px horizontal padding on the <section> itself */
+  #hero, #final { padding-left: 20px !important; padding-right: 20px !important; }
 }

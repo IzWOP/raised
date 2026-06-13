@@ -5,8 +5,6 @@ import gsap from "gsap";
 import type { Content } from "@/lib/content/types";
 import CTAButton from "../ui/CTAButton";
 
-const EASE = "cubic-bezier(0.22,1,0.36,1)";
-
 export default function Hero({
   hero,
   hud,

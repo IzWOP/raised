@@ -1,7 +1,7 @@
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, CSSProperties } from "react";
 
 type ContainerProps = HTMLAttributes<HTMLDivElement> & {
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 };
 
 /**
@@ -16,6 +16,7 @@ export default function Container({
 }: ContainerProps) {
   return (
     <div
+      data-container=""
       style={{
         maxWidth: 1200,
         margin: "0 auto",
