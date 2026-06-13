@@ -31,6 +31,8 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
@@ -40,6 +42,7 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const content = getContent(locale);
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://raisedagency.com"),
     title: content.meta.title,
     description: content.meta.description,
     alternates: {

@@ -26,7 +26,7 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Already localized — pass through
-  if (pathname.startsWith("/en") || pathname.startsWith("/es")) {
+  if (/^\/(en|es)(\/|$)/.test(pathname)) {
     return NextResponse.next();
   }
 
@@ -46,5 +46,4 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: ["/((?!_next|api|.*\\..*).*)" ],
-  matchers: ["/((?!_next|api|.*\\..*).*)" ],
 };

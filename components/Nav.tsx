@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { NavContent } from "@/lib/content/types";
-import type { Locale } from "@/lib/content/types";
+import type { NavContent, Locale } from "@/lib/content/types";
 import { scrambleNav } from "@/lib/scramble";
 import CTAButton from "./ui/CTAButton";
 import LocaleSwitcher from "./LocaleSwitcher";
