@@ -16,6 +16,12 @@ const C_PACKET = new THREE.Color("#FFFFFF"); // packets
 const C_DEBRIS = new THREE.Color("#8C8C8C"); // debris
 const C_CRIT = new THREE.Color("#c08585"); // crit flicker — diagnostic only
 
+// Perspective projection. screenScale k = PROJ_FOCAL / (PROJ_DIST + Z).
+// Larger focal &/or smaller distance → the field reads bigger / closer to camera.
+// Prototype default was 1100 / 1500; bumped so the chaos cloud sits closer.
+const PROJ_FOCAL = 1300;
+const PROJ_DIST = 1440;
+
 // ---- materials: per-vertex alpha over black, no depth, normal blend ----
 function pointMaterial(color: THREE.Color, size: number, round = false) {
   return new THREE.ShaderMaterial({
@@ -199,7 +205,7 @@ export default function Field() {
         let Z = px * sR + pz * cR;
         const Y = py * cT - Z * sT;
         Z = py * sT + Z * cT;
-        const k = 1100 / (1500 + Z);
+        const k = PROJ_FOCAL / (PROJ_DIST + Z);
         const px2 = halfW + X * k;
         const py2 = halfH + Y * k;
         sx[i] = px2; sy[i] = py2; sk[i] = k;
@@ -294,7 +300,7 @@ export default function Field() {
       let Z = px * sR + pz * cR;
       const Y = py * cT - Z * sT;
       Z = py * sT + Z * cT;
-      const k = 1100 / (1500 + Z);
+      const k = PROJ_FOCAL / (PROJ_DIST + Z);
       const px2 = halfW + X * k;
       const py2 = halfH + Y * k;
       sx[i] = px2;

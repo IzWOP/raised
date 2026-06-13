@@ -227,3 +227,24 @@ body {
   /* Hero and FinalCTA carry their 40px horizontal padding on the <section> itself */
   #hero, #final { padding-left: 20px !important; padding-right: 20px !important; }
 }
+
+/* ============================================================
+   Hero entrance — CSS-driven (NOT JS/GSAP) so the <h1> is always visible.
+   Base state is visible; the animation only adds the entrance. animation-delay
+   is set inline per element. riseIn/fadeUp already defined above.
+   ============================================================ */
+.hero-line {
+  display: block;
+  animation: riseIn 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-fade {
+  animation: fadeUp 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+/* Reduced motion: no entrance, no delay flash — show the visible base instantly. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-line,
+  .hero-fade {
+    animation: none !important;
+  }
+}
+

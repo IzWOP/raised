@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import type { Content } from "@/lib/content/types";
 import CTAButton from "../ui/CTAButton";
 
@@ -12,60 +11,24 @@ export default function Hero({
   hero: Content["hero"];
   hud: Content["hud"];
 }) {
-  const root = useRef<HTMLElement>(null);
   const eyebrowRef = useRef<HTMLSpanElement>(null);
   const caretRef = useRef<HTMLSpanElement>(null);
 
+  // Eyebrow typewriter only. The H1 / sub / CTA / support reveals are pure CSS
+  // (see .hero-line / .hero-fade in globals.css) so the headline is ALWAYS
+  // visible even if JS never runs or GSAP fails — its base state is visible and
+  // the entrance is an additive animation.
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const scope = root.current;
-    if (!scope) return;
-
-    const heroEls = Array.from(
-      scope.querySelectorAll<HTMLElement>("[data-hero]"),
-    );
-    const lines = Array.from(scope.querySelectorAll<HTMLElement>("[data-hero-line]"));
+    const eb = eyebrowRef.current;
+    const caret = caretRef.current;
 
     if (reduced) {
-      heroEls.forEach((el) => {
-        el.style.opacity = "1";
-        el.style.transform = "none";
-      });
-      lines.forEach((el) => (el.style.transform = "none"));
-      if (caretRef.current) caretRef.current.style.display = "none";
+      if (eb) eb.textContent = hero.eyebrow;
+      if (caret) caret.style.display = "none";
       return;
     }
 
-    const ctx = gsap.context(() => {
-      // mask-reveal H1 lines (translateY 112% → 0)
-      lines.forEach((el, i) => {
-        gsap.fromTo(
-          el,
-          { yPercent: 112 },
-          {
-            yPercent: 0,
-            duration: 0.95,
-            ease: "power3.out",
-            delay: 1.18 + i * 0.12,
-          },
-        );
-      });
-      // fade-up the rest
-      heroEls.forEach((el) => {
-        const delay = Number(el.dataset.hero) / 1000 || 0;
-        gsap.to(el, {
-          opacity: 1,
-          y: 0,
-          duration: 0.95,
-          ease: "power3.out",
-          delay,
-        });
-      });
-    }, scope);
-
-    // eyebrow typewriter (16ms/char, starts at 1080ms, caret hides +2.2s)
-    const eb = eyebrowRef.current;
-    const caret = caretRef.current;
     let typeTimer: number | undefined;
     let hideTimer: number | undefined;
     let startTimer: number | undefined;
@@ -88,7 +51,6 @@ export default function Hero({
     }
 
     return () => {
-      ctx.revert();
       clearInterval(typeTimer);
       clearTimeout(hideTimer);
       clearTimeout(startTimer);
@@ -105,7 +67,6 @@ export default function Hero({
   return (
     <section
       id="hero"
-      ref={root}
       aria-label="Hero"
       style={{
         position: "relative",
@@ -158,7 +119,10 @@ export default function Hero({
         >
           {hero.h1.map((line, i) => (
             <span key={i} style={{ display: "block", overflow: "hidden", paddingBottom: "0.08em" }}>
-              <span data-hero-line style={{ display: "block", transform: "translateY(112%)" }}>
+              <span
+                className="hero-line"
+                style={{ display: "block", animationDelay: `${1.18 + i * 0.12}s` }}
+              >
                 {line}
               </span>
             </span>
@@ -166,7 +130,7 @@ export default function Hero({
         </h1>
 
         <p
-          data-hero="1550"
+          className="hero-fade"
           style={{
             fontFamily: "var(--font-body)",
             fontSize: 18,
@@ -174,26 +138,24 @@ export default function Hero({
             color: "#8C8C8C",
             maxWidth: 680,
             margin: "28px 0 0",
-            opacity: 0,
-            transform: "translateY(22px)",
+            animationDelay: "1.55s",
           }}
         >
           {hero.sub}
         </p>
 
-        <div data-hero="1720" style={{ marginTop: 40, opacity: 0, transform: "translateY(22px)" }}>
+        <div className="hero-fade" style={{ marginTop: 40, animationDelay: "1.72s" }}>
           <CTAButton label={hero.cta} href="#audit" variant="hero" />
         </div>
 
         <p
-          data-hero="1900"
+          className="hero-fade"
           style={{
             fontFamily: "var(--font-body)",
             fontSize: 14,
             color: "#5F5F5F",
             margin: "26px 0 0",
-            opacity: 0,
-            transform: "translateY(22px)",
+            animationDelay: "1.9s",
           }}
         >
           {hero.support}
