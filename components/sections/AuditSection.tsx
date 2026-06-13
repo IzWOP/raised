@@ -7,6 +7,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
 import StatusDot from "@/components/ui/StatusDot";
 import CTAButton from "@/components/ui/CTAButton";
+import FaqAccordion from "@/components/sections/FaqAccordion";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -303,7 +304,8 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
           </div>
         </div>
 
-        {/* FAQ accordion (#faq) added in Task 7b */}
+        {/* FAQ accordion */}
+        <FaqAccordion h3={audit.faq.h3} items={audit.faq.items} />
       </div>
     </section>
   );
