@@ -175,10 +175,98 @@ export default function Field() {
     const { width: cw, height: ch } = state.size;
     if (cw === 0 || ch === 0) return;
 
+    // ---- reduced-motion: skip scroll-driven state, render final lattice static ----
+    if (sceneFlags.reduced) {
+      // Force resting lattice values — oe=1, no wobble, no degrade, no dim, no parallax
+      const oe = 1; // full lattice (order=1 smoothstepped)
+      const dimm = 1; // dim=0 → 1-0*0.68 = 1
+      const breathe = 1; // breathe=0 → 1+0*... = 1
+      // Camera at lattice resting: rotY = 0*0.045 + 0 + 0 + 1*0.4 = 0.4, tilt = 0.16+0.36+0 = 0.52
+      const rotY = oe * 0.4; // = 0.4
+      const tilt = 0.16 + oe * 0.36; // = 0.52
+      const cR = Math.cos(rotY), sR = Math.sin(rotY);
+      const cT = Math.cos(tilt), sT = Math.sin(tilt);
+      const halfW = cw / 2, halfH = ch / 2;
+
+      const nodePos = built.nodeG.pos;
+      const nodeAlpha = built.nodeG.alpha;
+      const critAlpha = built.critG.alpha;
+      for (let i = 0; i < N; i++) {
+        const n = nodes[i];
+        // Fully lattice position, no wobble (wAmp = 1-oe = 0)
+        const px = n.lx, py = n.ly, pz = n.lz;
+        const X = px * cR - pz * sR;
+        let Z = px * sR + pz * cR;
+        const Y = py * cT - Z * sT;
+        Z = py * sT + Z * cT;
+        const k = 1100 / (1500 + Z);
+        const px2 = halfW + X * k;
+        const py2 = halfH + Y * k;
+        sx[i] = px2; sy[i] = py2; sk[i] = k;
+        nodePos[i * 3] = px2 - halfW;
+        nodePos[i * 3 + 1] = halfH - py2;
+        nodePos[i * 3 + 2] = 0;
+        nodeAlpha[i] = (0.22 + k * 0.3) * dimm * breathe;
+        critAlpha[i] = 0; // no crit flicker in reduced
+      }
+
+      // Chaos edges hidden (oe=1 → base = (1-1)*0.12 = 0)
+      built.chaosG.alpha.fill(0);
+      // Lattice edges fully visible (oe=1 → base = 1*0.17 = 0.17)
+      const latticeBase = oe * 0.17 * dimm * breathe; // 0.17
+      const lPos = built.latticeG.pos, lAl = built.latticeG.alpha;
+      for (let i = 0; i < latticeEdges.length; i++) {
+        const ai = latticeEdges[i][0], bi = latticeEdges[i][1];
+        const alpha = latticeBase * (0.6 + 0.4 * Math.min(sk[ai], sk[bi]));
+        const o0 = i * 6;
+        lPos[o0] = sx[ai] - halfW; lPos[o0 + 1] = halfH - sy[ai]; lPos[o0 + 2] = 0;
+        lPos[o0 + 3] = sx[bi] - halfW; lPos[o0 + 4] = halfH - sy[bi]; lPos[o0 + 5] = 0;
+        lAl[i * 2] = alpha; lAl[i * 2 + 1] = alpha;
+      }
+
+      // Packets on lattice edges (oe > 0.55, so ordered=true; t=0 → static positions)
+      const pa = (0.5 + oe * 0.4) * dimm * breathe; // 0.9
+      const headPos = built.headG.pos, headAlpha = built.headG.alpha;
+      const trailPos = built.trailG.pos, trailAlpha = built.trailG.alpha;
+      for (let i = 0; i < pk.length; i++) {
+        const p = pk[i];
+        const e = latticeEdges[p.li % latticeEdges.length];
+        const A = e[0], B = e[1];
+        const hx = sx[A] + (sx[B] - sx[A]) * p.t;
+        const hy = sy[A] + (sy[B] - sy[A]) * p.t;
+        const tb = Math.max(0, p.t - 0.08);
+        const tx = sx[A] + (sx[B] - sx[A]) * tb;
+        const ty = sy[A] + (sy[B] - sy[A]) * tb;
+        headPos[i * 3] = hx - halfW; headPos[i * 3 + 1] = halfH - hy; headPos[i * 3 + 2] = 0;
+        headAlpha[i] = pa;
+        const o0 = i * 6;
+        trailPos[o0] = tx - halfW; trailPos[o0 + 1] = halfH - ty; trailPos[o0 + 2] = 0;
+        trailPos[o0 + 3] = hx - halfW; trailPos[o0 + 4] = halfH - hy; trailPos[o0 + 5] = 0;
+        trailAlpha[i * 2] = pa * 0.35; trailAlpha[i * 2 + 1] = pa * 0.35;
+      }
+
+      // No debris in reduced
+      built.debrisG.alpha.fill(0);
+
+      // flush
+      built.nodeG.geo.getAttribute("position").needsUpdate = true;
+      built.nodeG.geo.getAttribute("alpha").needsUpdate = true;
+      built.critG.geo.getAttribute("alpha").needsUpdate = true;
+      built.chaosG.geo.getAttribute("alpha").needsUpdate = true;
+      built.latticeG.geo.getAttribute("position").needsUpdate = true;
+      built.latticeG.geo.getAttribute("alpha").needsUpdate = true;
+      built.headG.geo.getAttribute("position").needsUpdate = true;
+      built.headG.geo.getAttribute("alpha").needsUpdate = true;
+      built.trailG.geo.getAttribute("position").needsUpdate = true;
+      built.trailG.geo.getAttribute("alpha").needsUpdate = true;
+      built.debrisG.geo.getAttribute("alpha").needsUpdate = true;
+      return;
+    }
+
     updateSceneParams(ch);
     updatePointer();
 
-    const t = sceneFlags.reduced ? 0 : state.clock.elapsedTime;
+    const t = state.clock.elapsedTime;
     const P = sceneParams;
     const o = Math.min(1, Math.max(0, P.order));
     const oe = o * o * (3 - 2 * o); // smoothstep
