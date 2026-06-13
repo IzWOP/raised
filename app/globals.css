@@ -199,6 +199,9 @@ body {
 @media (max-width: 1023px) {
   /* Stack every multi-column grid to a single column */
   [data-grid] { grid-template-columns: 1fr !important; }
+  /* Reset explicit column spans (e.g. the Systems bento's grid-column: span N),
+     which would otherwise spawn implicit tracks and defeat the single column */
+  [data-grid] > * { grid-column: auto !important; }
 
   /* Unpin the scroll-driven beats (HANDOFF §5) */
   [data-pin-outer],
