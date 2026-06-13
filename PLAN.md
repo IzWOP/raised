@@ -93,4 +93,20 @@ Known not-yet-done: Lighthouse not measured (needs a real browser / deploy previ
 scene motion + reveals + magnetic CTA not visually verified (preview MCP is a hidden tab —
 no rAF/WebGL). Phase 6 (deploy) pending. Booking URL still a placeholder (`#audit`/`#final`).
 
-Now running the **Review Loop** to reconcile build vs. PLAN/HANDOFF/prompt.
+### Review Loop result (section mode — reconcile build vs PLAN/HANDOFF/KICKOFF)
+Done-condition: all 8 sections present + content-driven + correctly anchored; scene state
+machine matches §1; §2 effects have production equivalents; tokens §4 exact; a11y/§5; i18n §8;
+automated gates clean; zero P0/P1/P2.
+
+- **Automated gate:** `tsc` clean · `eslint .` 0 problems · `next build` clean (`/en`+`/es` SSG, proxy) · no secrets/`any`/`console`.
+- **Holistic audit (opus):** 0 P0, 0 P1. Verdict: ship-ready at code level.
+- **P2 findings — all resolved:**
+  - P2-1 ScrollTrigger not used (Lenis rAF + rect-driven params) → **ACCEPTED**: deliberate faithful-prototype port; the "match prototype 1:1" guardrail overrides §2's prescribed mechanism. Behavior is correct.
+  - P2-2 unused `next-intl` → **removed** (7bdf48c).
+  - P2-3 reduced-motion showed chaos not final lattice → **fixed** (5136515).
+  - P2-4 mobile fallback lacked CSS-animated packets → **fixed** (5136515).
+  - (Also fixed: 9 latent eslint errors in Phase-1 chrome files — 9a30816.)
+- **P3:** clamp 18/12 and rail 1100px both MATCH the prototype (source of truth) → no change. §1 "8×6×4" prose is a doc typo; code correctly uses 8×5×4=160.
+- **Known-unverified (environmental, NOT failures):** Lighthouse not measured (needs deploy preview / real browser); scene live motion not visually confirmed (preview MCP is a headless hidden tab — no rAF/WebGL). Recommend a real-browser pass before launch.
+
+**Gate status: PASS (code level).** Remaining before launch: Phase 6 deploy, real booking URL, Lighthouse + real-browser motion pass.
