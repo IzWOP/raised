@@ -5,6 +5,7 @@ import type { Content } from "@/lib/content/types";
 import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
 import { useReveal } from "@/lib/useReveal";
+import { STATUS_COLOR, STATUS_LABEL } from "@/components/ui/StatusDot";
 
 // ─── Per-card layout constants (prototype lines 640–699) ─────────────────────
 interface CardSpec {
@@ -23,12 +24,6 @@ const CARD_SPECS: CardSpec[] = [
   { span: 2, minHeight: 250, h3Size: 20, pSize: 14.5, padding: "30px 30px 34px", delay: 70  },
   { span: 2, minHeight: 250, h3Size: 20, pSize: 14.5, padding: "30px 30px 34px", delay: 140 },
 ];
-
-// ─── Status color helpers ─────────────────────────────────────────────────────
-const STATUS_COLOR: Record<"warn" | "crit", string> = {
-  warn: "#c9b072",
-  crit: "#c08585",
-};
 
 // ─── Component ───────────────────────────────────────────────────────────────
 
@@ -105,6 +100,7 @@ export default function SystemsSection({
     >
       {/* Interstitial floating label */}
       <div
+        aria-hidden="true"
         data-rv=""
         style={{
           position: "absolute",
@@ -143,15 +139,15 @@ export default function SystemsSection({
         >
           {systems.cards.map((card, i) => {
             const spec = CARD_SPECS[i];
-            const fromColor =
-              STATUS_COLOR[card.fixes.from as "warn" | "crit"] ?? "#c9b072";
-            const fromLabel = card.fixes.from === "crit" ? "CRIT" : "WARN";
+            if (!spec) return null;
+            const fromColor = STATUS_COLOR[card.fixes.from];
+            const fromLabel = STATUS_LABEL[card.fixes.from];
 
             return (
               <div
                 key={card.tag}
                 data-rv=""
-                {...(spec.delay ? { "data-rv-delay": String(spec.delay) } : {})}
+                data-rv-delay={String(spec.delay)}
                 onMouseEnter={() => {
                   const el = overlayRefs.current[i];
                   if (el) el.style.opacity = "1";

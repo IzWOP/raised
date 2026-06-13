@@ -4,16 +4,22 @@
  * Pulse uses the `pulse` keyframe already defined in globals.css.
  */
 
-type DotStatus = "ok" | "warn" | "crit";
+import type { Status } from "@/lib/content/types";
 
-const STATUS_COLOR: Record<DotStatus, string> = {
+export const STATUS_COLOR: Record<Status, string> = {
   ok: "#7fae8a",
   warn: "#c9b072",
   crit: "#c08585",
 };
 
+export const STATUS_LABEL: Record<Status, string> = {
+  ok: "OK",
+  warn: "WARN",
+  crit: "CRIT",
+};
+
 interface StatusDotProps {
-  status: DotStatus;
+  status: Status;
   size?: number;
   pulse?: boolean;
   pulseDur?: number;
