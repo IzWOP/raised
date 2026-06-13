@@ -182,3 +182,10 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* BreakingSection — CSS-only reduced-motion strip fallback (no CLS flash) */
+@media (prefers-reduced-motion: reduce) {
+  [data-strip-outer] { height: auto !important; }
+  [data-strip-sticky] { position: relative !important; height: auto !important; }
+  [data-strip-track] { flex-wrap: wrap !important; width: 100% !important; transform: none !important; }
+}

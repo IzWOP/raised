@@ -12,6 +12,10 @@ import { clamp01 } from "@/lib/scene/store";
 // ─── Pulse durations per card index (verbatim from prototype) ────────────────
 const PULSE_DURS = [2, 1.6, 2.2, 1.8, 2.4];
 
+// ─── SVG self-draw stagger constants ─────────────────────────────────────────
+const SVG_STAGGER_WINDOW = 0.72;
+const SVG_DRAW_DURATION = 0.2;
+
 // ─── Unique diagnostic SVGs — verbatim from prototype lines 560–622 ──────────
 // Each path that self-draws carries data-draw="".
 
@@ -188,25 +192,31 @@ export default function BreakingSection({
     Array(breaking.cards.length).fill(null),
   );
 
+  // Cached horizontal shift — recomputed on mount + resize, never read per scroll frame
+  const shiftRef = useRef(0);
+  useEffect(() => {
+    const recalc = () => {
+      const last = lastCardRef.current;
+      if (!last) return;
+      shiftRef.current = Math.max(
+        0,
+        last.offsetLeft + last.offsetWidth / 2 - window.innerWidth / 2,
+      );
+    };
+    recalc();
+    window.addEventListener("resize", recalc, { passive: true });
+    return () => window.removeEventListener("resize", recalc);
+  }, []);
+
   // Read reduced-motion once on mount (spec: "decide once on mount").
-  // Store in a ref (no setState) and imperatively patch the DOM — this avoids
-  // both the setState-in-effect lint error and an extra render cycle.
+  // Layout patching (height/position/wrap) is handled CSS-only via data attributes.
+  // This effect only reveals SVG paths immediately under reduced motion.
   const reducedMotionRef = useRef(false);
   useEffect(() => {
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
     reducedMotionRef.current = mql.matches;
 
     if (mql.matches) {
-      // Patch layout: section height → auto, strip sticky → relative, track wraps
-      if (sectionRef.current) sectionRef.current.style.height = "auto";
-      if (stickyRef.current) {
-        stickyRef.current.style.position = "relative";
-        stickyRef.current.style.height = "auto";
-      }
-      if (trackRef.current) {
-        trackRef.current.style.flexWrap = "wrap";
-        trackRef.current.style.width = "100%";
-      }
       // Reveal all SVG paths immediately (dashoffset → 0)
       cardSvgRefs.current.forEach((wrapper) => {
         if (!wrapper) return;
@@ -229,22 +239,17 @@ export default function BreakingSection({
     if (reducedMotionRef.current) return;
 
     const track = trackRef.current;
-    const last = lastCardRef.current;
-    if (!track || !last) return;
+    if (!track) return;
 
-    // Horizontal scrub: center the last card at sp=1
-    const shift = Math.max(
-      0,
-      last.offsetLeft + last.offsetWidth / 2 - window.innerWidth / 2,
-    );
-    track.style.transform = `translate3d(${(-sp * shift).toFixed(1)}px, 0, 0)`;
+    // Horizontal scrub: center the last card at sp=1 (shift cached by resize effect)
+    track.style.transform = `translate3d(${(-sp * shiftRef.current).toFixed(1)}px, 0, 0)`;
 
     // SVG self-draw: stagger reveal per card
     const n = breaking.cards.length; // 5
     cardSvgRefs.current.forEach((wrapper, i) => {
       if (!wrapper) return;
-      const start = (i / n) * 0.72;
-      const off = 1 - clamp01((sp - start) / 0.2);
+      const start = (i / n) * SVG_STAGGER_WINDOW;
+      const off = 1 - clamp01((sp - start) / SVG_DRAW_DURATION);
       const v = (100 * off).toFixed(1);
       wrapper.querySelectorAll<SVGPathElement>("[data-draw]").forEach((p) => {
         p.style.strokeDashoffset = v;
@@ -266,6 +271,7 @@ export default function BreakingSection({
     >
       <div
         ref={stickyRef}
+        data-strip-sticky=""
         style={{
           position: "sticky",
           top: 0,
@@ -315,7 +321,7 @@ export default function BreakingSection({
 
             return (
               <div
-                key={i}
+                key={card.tag}
                 data-diag-card=""
                 ref={isLast ? lastCardRef : undefined}
                 style={cardStyle}
