@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import type { Content } from "@/lib/content/types";
 import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
@@ -205,13 +205,25 @@ export default function ProblemCostSection({
   const costRef = useRef<HTMLDivElement>(null);
 
   // Refs for counter <span> elements — updated imperatively (no re-render)
-  const counterRefs = useRef<(HTMLSpanElement | null)[]>([null, null, null, null]);
-  const lastValues = useRef<string[]>(["", "", "", ""]);
+  const counterRefs = useRef<(HTMLSpanElement | null)[]>(Array(problem.cost.cards.length).fill(null));
+  const lastValues = useRef<string[]>(Array(problem.cost.cards.length).fill(""));
+
+  // I1 — reduced-motion read once and kept in sync via change listener
+  const reducedMotionRef = useRef(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = mql.matches;
+    const handler = (e: MediaQueryListEvent) => {
+      reducedMotionRef.current = e.matches;
+    };
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   useReveal(sectionRef);
 
   usePinProgress(costRef, (cp) => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = reducedMotionRef.current;
     const e = reduced ? 1 : 1 - Math.pow(1 - cp, 3); // easeOutCubic
 
     problem.cost.cards.forEach((card, i) => {
@@ -281,7 +293,7 @@ export default function ProblemCostSection({
               {...(vignetteDelays[i] ? { "data-rv-delay": String(vignetteDelays[i]) } : {})}
               style={cardStyle}
             >
-              {vignetteIcons[i]}
+              {vignetteIcons[i] ?? null}
               <h3
                 style={{
                   fontFamily: "var(--font-display)",
@@ -333,56 +345,15 @@ export default function ProblemCostSection({
               width: "100%",
             }}
           >
-            {/* Eyebrow row (hairline + mono) */}
-            <div
-              data-rv=""
-              style={{ display: "flex", alignItems: "center", gap: 14 }}
-            >
-              <span
-                style={{
-                  display: "block",
-                  width: 28,
-                  height: 1,
-                  background: "rgba(255,255,255,0.25)",
-                }}
-              />
-              <HUDLabel size={12} color="#8C8C8C">
-                {problem.cost.eyebrow}
-              </HUDLabel>
-            </div>
-
-            {/* h3 */}
-            <h3
-              data-rv=""
-              data-rv-delay="80"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: 38,
-                fontWeight: 700,
-                letterSpacing: "-0.025em",
-                lineHeight: 1.1,
-                color: "#FFFFFF",
-                margin: "22px 0 0",
-              }}
-            >
-              {problem.cost.h3}
-            </h3>
-
-            {/* copy */}
-            <p
-              data-rv=""
-              data-rv-delay="160"
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: 17,
-                lineHeight: 1.6,
-                color: "#8C8C8C",
-                maxWidth: 640,
-                margin: "20px 0 0",
-              }}
-            >
-              {problem.cost.copy}
-            </p>
+            {/* I2 — cost header via SectionHeader primitive */}
+            <SectionHeader
+              as="h3"
+              eyebrow={problem.cost.eyebrow}
+              h2={problem.cost.h3}
+              h2Size={38}
+              sub={problem.cost.copy}
+              maxWidthSub={640}
+            />
 
             {/* Counter cards grid */}
             <div
