@@ -3,6 +3,7 @@ import { Sora, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { getContent } from "@/lib/content";
 import SiteChrome from "@/components/SiteChrome";
+import Footer from "@/components/Footer";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body>
         <SiteChrome content={content} locale="en" />
         <main style={{ position: "relative", zIndex: 1 }}>{children}</main>
+        <Footer footer={content.footer} />
       </body>
     </html>
   );

@@ -19,7 +19,7 @@ export default function Home() {
       <WhyRaisedSection whyRaised={content.whyRaised} />
       <ProcessSection process={content.process} />
       <AuditSection audit={content.audit} />
-      <FinalCtaSection finalCta={content.finalCta} footer={content.footer} />
+      <FinalCtaSection finalCta={content.finalCta} />
     </>
   );
 }
