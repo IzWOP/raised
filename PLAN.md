@@ -82,6 +82,15 @@ Each section reads from the content layer; reveals via IntersectionObserver/Scro
 ---
 
 ### Current position
-Phase 0 ✅ and Phase 1 ✅ code-complete. `npm run build` + `tsc` clean.
-At 🔶 **CHECKPOINT 1** — live review in a real browser (preview MCP can't show rAF motion/WebGL).
-Awaiting sign-off to start **Phase 2** (scroll state machine).
+Phases 0–5 (Tasks 1–10) ✅ code-complete, built via subagent-driven development with
+two-stage review (spec + code quality) per task. `npm run build` clean (`/en` + `/es` SSG,
+proxy middleware). Scene state machine wired (Phase 2 folded into the real sections —
+`#problem`/`#systems`/`#proof`/`#process`/`#final` anchors live). i18n functionally verified
+(redirects, geo, locale rendering, hreflang, cookie). Mobile responsive verified via computed
+styles (grids stack, beats unpin, no horizontal overflow).
+
+Known not-yet-done: Lighthouse not measured (needs a real browser / deploy preview);
+scene motion + reveals + magnetic CTA not visually verified (preview MCP is a hidden tab —
+no rAF/WebGL). Phase 6 (deploy) pending. Booking URL still a placeholder (`#audit`/`#final`).
+
+Now running the **Review Loop** to reconcile build vs. PLAN/HANDOFF/prompt.
