@@ -6,6 +6,7 @@ import SystemsSection from "@/components/sections/SystemsSection";
 import WhyRaisedSection from "@/components/sections/WhyRaisedSection";
 import ProcessSection from "@/components/sections/ProcessSection";
 import AuditSection from "@/components/sections/AuditSection";
+import FinalCtaSection from "@/components/sections/FinalCtaSection";
 
 export default function Home() {
   const content = getContent("en");
@@ -18,6 +19,7 @@ export default function Home() {
       <WhyRaisedSection whyRaised={content.whyRaised} />
       <ProcessSection process={content.process} />
       <AuditSection audit={content.audit} />
+      <FinalCtaSection finalCta={content.finalCta} footer={content.footer} />
     </>
   );
 }
