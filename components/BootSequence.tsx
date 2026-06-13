@@ -18,6 +18,7 @@ export default function BootSequence({ lines }: { lines: BootLine[] }) {
       seen = sessionStorage.getItem("raised_booted") === "1";
     } catch {}
     if (reduced || seen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing initial state from browser/session check (reduced-motion + sessionStorage) that cannot run during SSR
       setVisible(false);
       return;
     }

@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/immutability --
+   This is a Three.js render loop: useFrame mutates BufferAttribute arrays and sets
+   .needsUpdate in place every frame by design (GPU buffer updates). The immutability
+   rule fundamentally conflicts with imperative WebGL rendering. */
 "use client";
 
 import { useMemo, useRef } from "react";
@@ -198,7 +202,7 @@ export default function Field() {
       const px = n.cx + (n.lx - n.cx) * oe;
       const py = n.cy + (n.ly - n.cy) * oe + wob;
       const pz = n.cz + (n.lz - n.cz) * oe;
-      let X = px * cR - pz * sR;
+      const X = px * cR - pz * sR;
       let Z = px * sR + pz * cR;
       const Y = py * cT - Z * sT;
       Z = py * sT + Z * cT;

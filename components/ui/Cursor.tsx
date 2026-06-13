@@ -11,6 +11,7 @@ export default function Cursor() {
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
     if (!fine) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing initial state from browser capability check (pointer:fine) that cannot run during SSR
     setEnabled(true);
     document.body.dataset.cursorActive = "1";
 
