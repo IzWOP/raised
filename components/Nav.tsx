@@ -5,6 +5,7 @@ import type { NavContent } from "@/lib/content/types";
 import type { Locale } from "@/lib/content/types";
 import { scrambleNav } from "@/lib/scramble";
 import CTAButton from "./ui/CTAButton";
+import LocaleSwitcher from "./LocaleSwitcher";
 
 export default function Nav({
   nav,
@@ -66,45 +67,7 @@ export default function Nav({
           </a>
         ))}
 
-        {/* Locale toggle — visual only in Phase 1; routing wired in Phase 4 (i18n). */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 3,
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.16em",
-          }}
-        >
-          <button
-            type="button"
-            data-cursor="VIEW"
-            style={{
-              all: "unset",
-              cursor: "pointer",
-              padding: "4px 7px",
-              borderRadius: 5,
-              color: locale === "en" ? "#FFFFFF" : "#5F5F5F",
-            }}
-          >
-            EN
-          </button>
-          <span style={{ color: "#2A2A2A" }}>/</span>
-          <button
-            type="button"
-            data-cursor="VIEW"
-            style={{
-              all: "unset",
-              cursor: "pointer",
-              padding: "4px 7px",
-              borderRadius: 5,
-              color: locale === "es" ? "#FFFFFF" : "#5F5F5F",
-            }}
-          >
-            ES
-          </button>
-        </div>
+        <LocaleSwitcher locale={locale} />
 
         <CTAButton label={nav.cta} href="#audit" variant="nav" />
       </div>

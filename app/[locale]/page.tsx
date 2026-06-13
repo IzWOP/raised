@@ -1,4 +1,5 @@
-import { getContent } from "@/lib/content";
+import { getContent, isLocale } from "@/lib/content";
+import { notFound } from "next/navigation";
 import Hero from "@/components/sections/Hero";
 import ProblemCostSection from "@/components/sections/ProblemCostSection";
 import BreakingSection from "@/components/sections/BreakingSection";
@@ -8,8 +9,14 @@ import ProcessSection from "@/components/sections/ProcessSection";
 import AuditSection from "@/components/sections/AuditSection";
 import FinalCtaSection from "@/components/sections/FinalCtaSection";
 
-export default function Home() {
-  const content = getContent("en");
+export default async function LocalePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+  const content = getContent(locale);
   return (
     <>
       <Hero hero={content.hero} hud={content.hud} />
