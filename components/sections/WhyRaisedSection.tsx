@@ -132,7 +132,7 @@ export default function WhyRaisedSection({
             >
               {whyRaised.left.items.map((item, i) => (
                 <div
-                  key={i}
+                  key={item}
                   style={{
                     display: "flex",
                     gap: 14,
@@ -199,6 +199,7 @@ export default function WhyRaisedSection({
             {/* Animated diff-rail (foreground) */}
             <span
               ref={railRef}
+              aria-hidden="true"
               style={{
                 position: "absolute",
                 left: 17,
@@ -241,9 +242,9 @@ export default function WhyRaisedSection({
             <div
               style={{ display: "flex", flexDirection: "column", gap: 22 }}
             >
-              {whyRaised.right.items.map((item, i) => (
+              {whyRaised.right.items.map((item) => (
                 <div
-                  key={i}
+                  key={item}
                   style={{ display: "flex", gap: 14, alignItems: "baseline" }}
                 >
                   {/* Diamond marker — filled */}
