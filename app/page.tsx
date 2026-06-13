@@ -5,6 +5,7 @@ import BreakingSection from "@/components/sections/BreakingSection";
 import SystemsSection from "@/components/sections/SystemsSection";
 import WhyRaisedSection from "@/components/sections/WhyRaisedSection";
 import ProcessSection from "@/components/sections/ProcessSection";
+import AuditSection from "@/components/sections/AuditSection";
 
 export default function Home() {
   const content = getContent("en");
@@ -16,6 +17,7 @@ export default function Home() {
       <SystemsSection systems={content.systems} />
       <WhyRaisedSection whyRaised={content.whyRaised} />
       <ProcessSection process={content.process} />
+      <AuditSection audit={content.audit} />
     </>
   );
 }
