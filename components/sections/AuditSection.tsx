@@ -9,6 +9,11 @@ import StatusDot from "@/components/ui/StatusDot";
 import CTAButton from "@/components/ui/CTAButton";
 import FaqAccordion from "@/components/sections/FaqAccordion";
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const VERIFY_BASE_MS = 140;
+const VERIFY_STAGGER_MS = 110;
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function AuditSection({ audit }: { audit: Content["audit"] }) {
@@ -56,7 +61,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
           if (!en.isIntersecting) return;
           const el = en.target as HTMLDivElement;
           const i = items.indexOf(el);
-          verify(i, 140 + i * 110);
+          verify(i, VERIFY_BASE_MS + i * VERIFY_STAGGER_MS);
           io.unobserve(el);
         });
       },
@@ -295,8 +300,8 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
               />
             </div>
 
-            {/* Pricing — renders nothing when empty */}
-            {audit.pricing ? (
+            {/* Pricing — renders nothing when empty or whitespace-only */}
+            {audit.pricing?.trim() ? (
               <HUDLabel size={11} color="#5F5F5F">
                 {audit.pricing}
               </HUDLabel>

@@ -17,7 +17,7 @@ export default function FaqAccordion({
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div id="faq" style={{ margin: "160px 0 0" }}>
+    <div id="faq" data-scene="faq" style={{ margin: "160px 0 0" }}>
       {/* Heading */}
       <h3
         data-rv=""
@@ -42,7 +42,7 @@ export default function FaqAccordion({
 
           return (
             <div
-              key={i}
+              key={item.q}
               style={{
                 position: "relative",
                 borderTop: "1px solid rgba(255,255,255,0.08)",
