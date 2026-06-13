@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { clamp01 } from "@/lib/scene/store";
 
 /**
@@ -14,13 +14,20 @@ export function usePinProgress(
   ref: React.RefObject<HTMLElement | null>,
   onProgress: (p: number) => void,
 ): void {
+  const onProgressRef = useRef(onProgress);
+  useEffect(() => {
+    onProgressRef.current = onProgress;
+  });
+
   useEffect(() => {
     const compute = () => {
       const el = ref.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
-      const p = clamp01(-r.top / (r.height - window.innerHeight));
-      onProgress(p);
+      const denom = r.height - window.innerHeight;
+      if (denom <= 0) return;
+      const p = clamp01(-r.top / denom);
+      onProgressRef.current(p);
     };
 
     compute();
@@ -32,8 +39,5 @@ export function usePinProgress(
       window.removeEventListener("scroll", compute);
       window.removeEventListener("resize", compute);
     };
-    // onProgress is intentionally excluded — callers should memoize or stabilise it;
-    // re-subscribing on every render would be expensive and matches prototype behaviour.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 }

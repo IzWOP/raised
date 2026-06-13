@@ -29,6 +29,7 @@ export default function StatusDot({
 }: StatusDotProps) {
   return (
     <span
+      aria-hidden="true"
       style={{
         display: "block",
         width: size,
