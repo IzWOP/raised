@@ -21,6 +21,7 @@ export default function FinalCtaSection({
     <section
       id="final"
       ref={sectionRef}
+      aria-label="Get started"
       data-scene="final"
       data-screen-label="08 Final CTA"
       style={{

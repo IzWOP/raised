@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import type { Content } from "@/lib/content/types";
 import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
+import Container from "@/components/ui/Container";
 import { useReveal } from "@/lib/useReveal";
 import { clamp01 } from "@/lib/scene/store";
 
@@ -60,11 +61,12 @@ export default function WhyRaisedSection({
     <section
       id="why"
       ref={sectionRef}
+      aria-label="Why Raised"
       data-scene="diff"
       data-screen-label="05 Why Raised"
       style={{ position: "relative", padding: "170px 0" }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px" }}>
+      <Container>
 
         {/* Section header */}
         <SectionHeader
@@ -78,6 +80,7 @@ export default function WhyRaisedSection({
 
         {/* Comparison grid */}
         <div
+          data-grid=""
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -360,7 +363,7 @@ export default function WhyRaisedSection({
           </div>
         </div>
 
-      </div>
+      </Container>
     </section>
   );
 }

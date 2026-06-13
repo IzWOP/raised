@@ -20,12 +20,14 @@ export default function ProcessSection({
     <section
       id="process"
       ref={sectionRef}
+      aria-label="Our process"
       data-scene="process"
       data-screen-label="06 Process"
       style={{ position: "relative", padding: "170px 0 60px" }}
     >
       {/* ── Two-column grid ───────────────────────────────────────────────── */}
       <div
+        data-grid=""
         style={{
           maxWidth: 1200,
           margin: "0 auto",

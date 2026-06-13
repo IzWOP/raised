@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import type { Content } from "@/lib/content/types";
 import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
+import Container from "@/components/ui/Container";
 import { useReveal } from "@/lib/useReveal";
 import { STATUS_COLOR, STATUS_LABEL } from "@/components/ui/StatusDot";
 
@@ -94,6 +95,7 @@ export default function SystemsSection({
     <section
       id="systems"
       ref={sectionRef}
+      aria-label="Systems we build"
       data-scene="systems"
       data-screen-label="04 Systems We Build"
       style={{ position: "relative", padding: "46vh 0 170px" }}
@@ -119,7 +121,7 @@ export default function SystemsSection({
       </div>
 
       {/* Inner container */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px" }}>
+      <Container>
         <SectionHeader
           eyebrow={systems.eyebrow}
           h2={systems.h2}
@@ -130,6 +132,7 @@ export default function SystemsSection({
 
         {/* Bento grid */}
         <div
+          data-grid=""
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(6, 1fr)",
@@ -285,7 +288,7 @@ export default function SystemsSection({
             );
           })}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import type { Content } from "@/lib/content/types";
 import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
+import Container from "@/components/ui/Container";
 import { useReveal } from "@/lib/useReveal";
 import { usePinProgress } from "@/lib/usePinProgress";
 
@@ -252,12 +253,13 @@ export default function ProblemCostSection({
     <section
       id="problem"
       ref={sectionRef}
+      aria-label="The problem"
       data-scene="problem"
       data-screen-label="02 Problem and Cost"
       style={{ position: "relative", padding: "190px 0 0" }}
     >
       {/* ── A. Problem block ──────────────────────────────────────────────── */}
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 40px" }}>
+      <Container>
         <SectionHeader
           eyebrow={problem.eyebrow}
           h2={problem.h2}
@@ -280,6 +282,7 @@ export default function ProblemCostSection({
 
         {/* Vignette cards grid */}
         <div
+          data-grid=""
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -320,15 +323,17 @@ export default function ProblemCostSection({
             </div>
           ))}
         </div>
-      </div>
+      </Container>
 
       {/* ── B. Cost block — sticky pin ────────────────────────────────────── */}
       <div
         ref={costRef}
         data-scene="cost"
+        data-pin-outer=""
         style={{ position: "relative", height: "240vh", marginTop: 120 }}
       >
         <div
+          data-pin-sticky=""
           style={{
             position: "sticky",
             top: 0,
@@ -357,6 +362,7 @@ export default function ProblemCostSection({
 
             {/* Counter cards grid */}
             <div
+              data-grid=""
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(4, 1fr)",

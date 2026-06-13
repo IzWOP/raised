@@ -191,3 +191,34 @@ body {
   [data-strip-sticky] { position: relative !important; height: auto !important; }
   [data-strip-track] { flex-wrap: wrap !important; width: 100% !important; transform: none !important; }
 }
+
+/* ============================================================
+   Mobile responsive overrides (<1024px)
+   Additive-only: all desktop inline styles remain unchanged.
+   ============================================================ */
+@media (max-width: 1023px) {
+  /* Stack every multi-column grid to a single column */
+  [data-grid] { grid-template-columns: 1fr !important; }
+
+  /* Unpin the scroll-driven beats (HANDOFF §5) */
+  [data-pin-outer],
+  [data-strip-outer] { height: auto !important; }
+
+  [data-pin-sticky],
+  [data-strip-sticky] {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Breaking horizontal strip — wrap cards to full width, clear transform */
+  [data-strip-track] {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+  [data-strip-track] > * { width: 100% !important; }
+
+  /* Tame oversized desktop side-padding on inner containers */
+  section { padding-left: 16px; padding-right: 16px; }
+}

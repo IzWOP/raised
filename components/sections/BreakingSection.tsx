@@ -261,6 +261,7 @@ export default function BreakingSection({
     <section
       id="breaking"
       ref={sectionRef}
+      aria-label="Where systems break"
       data-scene="breaking"
       data-strip-outer=""
       data-screen-label="03 Where Growth Breaks"

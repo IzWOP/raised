@@ -108,6 +108,7 @@ export default function Hero({
     <section
       id="hero"
       ref={root}
+      aria-label="Hero"
       style={{
         position: "relative",
         minHeight: "100vh",

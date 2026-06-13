@@ -7,6 +7,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
 import StatusDot from "@/components/ui/StatusDot";
 import CTAButton from "@/components/ui/CTAButton";
+import Container from "@/components/ui/Container";
 import FaqAccordion from "@/components/sections/FaqAccordion";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -98,17 +99,12 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
     <section
       id="audit"
       ref={sectionRef}
+      aria-label="Operations audit"
       data-scene="audit"
       data-screen-label="07 Operations Audit"
       style={{ position: "relative", padding: "170px 0" }}
     >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "0 40px",
-        }}
-      >
+      <Container>
         {/* ── Section header ──────────────────────────────────────────────── */}
         <SectionHeader
           eyebrow={audit.eyebrow}
@@ -120,6 +116,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
 
         {/* ── Main grid ───────────────────────────────────────────────────── */}
         <div
+          data-grid=""
           style={{
             display: "grid",
             gridTemplateColumns: "7fr 5fr",
@@ -311,7 +308,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
 
         {/* FAQ accordion */}
         <FaqAccordion h3={audit.faq.h3} items={audit.faq.items} />
-      </div>
+      </Container>
     </section>
   );
 }
