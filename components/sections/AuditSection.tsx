@@ -17,7 +17,13 @@ const VERIFY_STAGGER_MS = 110;
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function AuditSection({ audit }: { audit: Content["audit"] }) {
+export default function AuditSection({
+  audit,
+  process,
+}: {
+  audit: Content["audit"];
+  process: Content["process"];
+}) {
   const sectionRef = useRef<HTMLElement>(null);
   useReveal(sectionRef);
 
@@ -113,6 +119,71 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
           sub={audit.copy}
           maxWidthSub={680}
         />
+
+        {/* ── Process strip (scene reads #process → ORBIT) ──────────────────── */}
+        <div id="process" data-rv="" style={{ margin: "52px 0 0" }}>
+          <HUDLabel size={12} color="#8C8C8C">
+            {process.label}
+          </HUDLabel>
+          <div
+            data-grid=""
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${process.steps.length}, 1fr)`,
+              gap: 1,
+              marginTop: 20,
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 16,
+              overflow: "hidden",
+              background: "rgba(255,255,255,0.08)",
+            }}
+          >
+            {process.steps.map((step, i) => (
+              <div
+                key={step.label}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 8,
+                  padding: "20px 22px",
+                  backgroundColor: "#0B0B0B",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 11,
+                    letterSpacing: "0.18em",
+                    color: "#5F5F5F",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 12,
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "#D9D9D9",
+                  }}
+                >
+                  {step.label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 13,
+                    lineHeight: 1.5,
+                    color: "#8C8C8C",
+                  }}
+                >
+                  {step.body}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* ── Main grid ───────────────────────────────────────────────────── */}
         <div
@@ -307,7 +378,11 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
         </div>
 
         {/* FAQ accordion */}
-        <FaqAccordion h3={audit.faq.h3} items={audit.faq.items} />
+        <FaqAccordion
+          h3={audit.faq.h3}
+          items={audit.faq.items}
+          defaultOpen={[0, 1]}
+        />
       </Container>
     </section>
   );

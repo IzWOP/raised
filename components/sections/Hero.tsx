@@ -14,7 +14,7 @@ export default function Hero({
   const eyebrowRef = useRef<HTMLSpanElement>(null);
   const caretRef = useRef<HTMLSpanElement>(null);
 
-  // Eyebrow typewriter only. The H1 / sub / CTA / support reveals are pure CSS
+  // Eyebrow typewriter only. The H1 / sub / CTA reveals are pure CSS
   // (see .hero-line / .hero-fade in globals.css) so the headline is ALWAYS
   // visible even if JS never runs or GSAP fails — its base state is visible and
   // the entrance is an additive animation.
@@ -84,7 +84,7 @@ export default function Hero({
       <div style={corner({ bottom: 36, right: 36, borderRight: "1px solid rgba(255,255,255,0.22)", borderBottom: "1px solid rgba(255,255,255,0.22)" })} />
 
       {/* bottom-left HUD status */}
-      <div style={{ position: "absolute", bottom: 48, left: 76, display: "flex", alignItems: "center", gap: 10 }}>
+      <div data-hero-hud="" style={{ position: "absolute", bottom: 48, left: 76, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ display: "block", width: 6, height: 6, borderRadius: "50%", background: "#7fae8a", animation: "pulse 2.4s ease-in-out infinite" }} />
         <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#5F5F5F" }}>
           {hud.status}
@@ -92,7 +92,7 @@ export default function Hero({
       </div>
 
       {/* bottom-right scroll cue */}
-      <div style={{ position: "absolute", bottom: 48, right: 76, display: "flex", alignItems: "center", gap: 10 }}>
+      <div data-hero-hud="" style={{ position: "absolute", bottom: 48, right: 76, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#5F5F5F" }}>
           {hud.scroll}
         </span>
@@ -147,19 +147,6 @@ export default function Hero({
         <div className="hero-fade" style={{ marginTop: 40, animationDelay: "1.72s" }}>
           <CTAButton label={hero.cta} href="#audit" variant="hero" />
         </div>
-
-        <p
-          className="hero-fade"
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 14,
-            color: "#5F5F5F",
-            margin: "26px 0 0",
-            animationDelay: "1.9s",
-          }}
-        >
-          {hero.support}
-        </p>
       </div>
     </section>
   );

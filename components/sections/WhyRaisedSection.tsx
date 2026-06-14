@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import type { Content } from "@/lib/content/types";
 import SectionHeader from "@/components/ui/SectionHeader";
 import HUDLabel from "@/components/ui/HUDLabel";
@@ -15,6 +15,20 @@ const GLITCH_DELAYS    = [0,   1.1, 2.3, 0.6, 3.2, 1.8];
 // ── Receipt reveal delays (prototype lines 758–764) ───────────────────────────
 const RECEIPT_DELAYS = [0, 50, 100, 150, 200, 250, 300];
 
+// ── Monogram initials — first letter of first + last word, punctuation stripped ─
+// e.g. 'Isaac "Izzy" Vazquez' → "IV"; falls back to "R" when no usable name.
+function deriveInitials(name?: string): string {
+  if (!name) return "R";
+  const words = name
+    .split(/\s+/)
+    .map((w) => w.replace(/[^A-Za-z0-9]/g, ""))
+    .filter(Boolean);
+  if (words.length === 0) return "R";
+  const first = words[0][0] ?? "";
+  const last = words.length > 1 ? words[words.length - 1][0] ?? "" : "";
+  return (first + last).toUpperCase() || "R";
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function WhyRaisedSection({
@@ -22,8 +36,25 @@ export default function WhyRaisedSection({
 }: {
   whyRaised: Content["whyRaised"];
 }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const railRef    = useRef<HTMLSpanElement>(null);
+  const sectionRef   = useRef<HTMLElement>(null);
+  const railRef      = useRef<HTMLSpanElement>(null);
+  const receiptsRef  = useRef<HTMLDivElement>(null);
+
+  // ── Receipts carousel active index — meaningful only in the mobile carousel.
+  //    Derived from scrollLeft on scroll; DOM is only read inside the handler
+  //    (SSR-safe). On desktop the track doesn't scroll, so this stays 0.
+  const [activeReceipt, setActiveReceipt] = useState(0);
+
+  const onReceiptsScroll = () => {
+    const track = receiptsRef.current;
+    if (!track) return;
+    const first = track.firstElementChild as HTMLElement | null;
+    // step = card width + flex gap; guard against zero-width during layout
+    const itemWidth = first ? first.offsetWidth + 14 : track.clientWidth;
+    if (itemWidth <= 0) return;
+    const next = Math.round(track.scrollLeft / itemWidth);
+    setActiveReceipt((prev) => (prev === next ? prev : next));
+  };
 
   // ── Diff-rail scroll animation — port of updateDom lines 1227–1231 ──────────
   useEffect(() => {
@@ -140,8 +171,8 @@ export default function WhyRaisedSection({
                     display: "flex",
                     gap: 14,
                     alignItems: "baseline",
-                    animation: `glitch ${GLITCH_DURATIONS[i]}s steps(1) infinite`,
-                    animationDelay: `${GLITCH_DELAYS[i]}s`,
+                    animation: `glitch ${GLITCH_DURATIONS[i] ?? 6}s steps(1) infinite`,
+                    animationDelay: `${GLITCH_DELAYS[i] ?? 0}s`,
                   }}
                 >
                   {/* Diamond marker — hollow */}
@@ -316,8 +347,98 @@ export default function WhyRaisedSection({
             maxWidthSub={720}
           />
 
-          {/* Operator receipts */}
-          <div style={{ marginTop: 64 }}>
+          {/* ── Operator identity — photo (or monogram) + name + role ─────────── */}
+          <div
+            data-rv=""
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 20,
+              marginTop: 44,
+            }}
+          >
+            {whyRaised.operator.photo ? (
+              // eslint-disable-next-line @next/next/no-img-element -- optional, swappable operator headshot (possibly remote); fixed 128px dims, avoids next/image remote-pattern config for a placeholder
+              <img
+                src={whyRaised.operator.photo}
+                alt={whyRaised.operator.name ?? "Operator"}
+                width={128}
+                height={128}
+                style={{
+                  flexShrink: 0,
+                  width: 128,
+                  height: 128,
+                  borderRadius: 16,
+                  border: "1px solid #2A2A2A",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              <div
+                aria-hidden="true"
+                style={{
+                  flexShrink: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 120,
+                  height: 120,
+                  background: "#141414",
+                  border: "1px solid #2A2A2A",
+                  borderRadius: 16,
+                  fontFamily: "var(--font-display)",
+                  fontSize: 36,
+                  color: "#D9D9D9",
+                }}
+              >
+                {deriveInitials(whyRaised.operator.name)}
+              </div>
+            )}
+
+            {(whyRaised.operator.name || whyRaised.operator.role) && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 6,
+                }}
+              >
+                {whyRaised.operator.name && (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 16,
+                      color: "#FFFFFF",
+                    }}
+                  >
+                    {whyRaised.operator.name}
+                  </span>
+                )}
+                {whyRaised.operator.role && (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 12,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: "#8C8C8C",
+                    }}
+                  >
+                    {whyRaised.operator.role}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Operator receipts — flat list on desktop; scroll-snap carousel on
+              mobile (global CSS keys off data-receipts for overflow + snap). */}
+          <div
+            ref={receiptsRef}
+            data-receipts=""
+            onScroll={onReceiptsScroll}
+            style={{ marginTop: 40 }}
+          >
             {whyRaised.operator.receipts.map((receipt, i) => (
               <div
                 key={receipt.tag}
@@ -329,6 +450,7 @@ export default function WhyRaisedSection({
                   alignItems: "baseline",
                   padding: "17px 0",
                   borderTop: "1px solid rgba(255,255,255,0.08)",
+                  scrollSnapAlign: "start",
                   ...(i === whyRaised.operator.receipts.length - 1
                     ? { borderBottom: "1px solid rgba(255,255,255,0.08)" }
                     : {}),
@@ -360,6 +482,21 @@ export default function WhyRaisedSection({
                 </span>
               </div>
             ))}
+          </div>
+
+          {/* Carousel position counter — only meaningful on mobile; global CSS
+              keyed off data-receipts-counter hides it on desktop. */}
+          <div
+            data-receipts-counter=""
+            aria-hidden="true"
+            style={{
+              marginTop: 14,
+              fontFamily: "var(--font-mono)",
+              fontSize: 12,
+              color: "#5F5F5F",
+            }}
+          >
+            {`${activeReceipt + 1} / ${whyRaised.operator.receipts.length}`}
           </div>
         </div>
 

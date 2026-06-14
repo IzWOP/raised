@@ -47,7 +47,7 @@ npx eslint .     # lint
 ```
 app/
   [locale]/layout.tsx     # root layout: fonts, <html lang>, SiteChrome, <main>, generateMetadata (hreflang)
-  [locale]/page.tsx       # renders the 8 sections from getContent(locale)
+  [locale]/page.tsx       # renders the 6 blocks from getContent(locale)
   globals.css             # Tailwind v4 @theme tokens, keyframes, mobile + reduced-motion rules
 proxy.ts                  # locale middleware: cookie → geo (x-vercel-ip-country) → Accept-Language → en
 lib/
@@ -58,9 +58,9 @@ lib/
   scramble.ts             # nav / CTA text scramble
 components/
   scene/                  # SceneRoot (gate), SceneCanvas (R3F), Field (the render loop), SceneFallback
-  sections/               # Hero, ProblemCost, Breaking, Systems, WhyRaised, Process, Audit (+FaqAccordion), FinalCta
+  sections/               # Hero, ProblemCost (The Cost), BreaksFixes (merged Breaking+Systems accordion), WhyRaised, Audit (+FaqAccordion + process strip), FinalCta
   ui/                     # CTAButton, Cursor, SectionHeader, HUDLabel, StatusDot, Container
-  Nav, ScrollRail, Grain, BootSequence, SmoothScroll, Footer, SiteChrome, LocaleSwitcher
+  Nav, ScrollRail, Grain, BootSequence, SmoothScroll, Footer, SiteChrome, LocaleSwitcher, MobileCTABar
 reference/                # HANDOFF.md (spec), KICKOFF.md (brief), prototype.decoded.html (source of truth), BUILD_NOTES.md
 ```
 

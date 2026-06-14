@@ -8,6 +8,7 @@ import Cursor from "./ui/Cursor";
 import BootSequence from "./BootSequence";
 import Nav from "./Nav";
 import ScrollRail from "./ScrollRail";
+import MobileCTABar from "./MobileCTABar";
 
 // All layout-level fixed/overlay chrome that sits outside the scrollable <main>.
 export default function SiteChrome({
@@ -26,6 +27,7 @@ export default function SiteChrome({
       <BootSequence lines={content.boot} />
       <Nav nav={content.nav} locale={locale} />
       <ScrollRail ticks={content.rail} />
+      <MobileCTABar label={content.hero.cta} href="#audit" />
     </>
   );
 }

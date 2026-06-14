@@ -110,3 +110,41 @@ automated gates clean; zero P0/P1/P2.
 - **Known-unverified (environmental, NOT failures):** Lighthouse not measured (needs deploy preview / real browser); scene live motion not visually confirmed (preview MCP is a headless hidden tab — no rAF/WebGL). Recommend a real-browser pass before launch.
 
 **Gate status: PASS (code level).** Remaining before launch: Phase 6 deploy, real booking URL, Lighthouse + real-browser motion pass.
+
+---
+
+## R3 — Lean restructure (mobile-length reduction)
+
+Design-chat verdict: 8 sections → **6 blocks** to cut mobile length. Implemented via the
+understand → build (impl/review/fix per component) → integrate → adversarial review pipeline.
+
+**Structure change:** Hero (#hero, drop support line, mobile type −~30%) → **The Cost** (#problem,
+counters-only 2×2 on mobile; story vignettes removed) → **Breaks → Fixes** (#systems, NEW
+`BreaksFixesSection` — a 5-item accessible accordion merging the old `BreakingSection` +
+`SystemsSection`, each item BREAK→FIX with the ported diagnostic SVGs + a CTA) → **Why Raised**
+(#why / inner #proof, comparison trimmed to 4/side, receipts 7→5 + mobile scroll-snap carousel,
+operator photo/monogram) → **Audit** (#audit, `process` folded in as a compact strip carrying
+#process, FAQ top-2 default-open) → **Final CTA** (#final, unchanged). NEW global
+`MobileCTABar` (sticky, mobile-only, `data-mobile-cta`).
+
+**Scene:** `lib/scene/params.ts` UNCHANGED — it reads `#problem/#systems/#proof/#process/#final`
+by id; the restructure keeps all five present (relocated `#systems` onto the merged section, kept
+`#process` on the new strip). THE TURN now happens across the Breaks→Fixes block.
+
+**Content layer:** `types.ts` reshaped — added `breaksFixes`/`BreakFixCard`, `ProcessStep`,
+optional `operator.{name,role,photo}`; flattened `problem` (counters only); removed `breaking`,
+`systems`, `Vignette`, `Phase`, `hero.support`, nested `problem.cost`, `process.{eyebrow,h2,sub,
+phases,ongoing*}`. EN + ES both updated in lockstep (rail 8→6 ticks, nav anchors valid).
+
+**Deleted:** `BreakingSection.tsx`, `SystemsSection.tsx`, `ProcessSection.tsx`, and
+`lib/usePinProgress.ts` (orphaned after the pinned sections were removed).
+
+### Review Loop result (R3)
+- **Automated gate:** `tsc` clean · `eslint .` 0/0 · `next build` clean (`/en`+`/es` SSG, proxy) · runtime curl verified all 6 blocks render in EN+ES, all 5 scene ids present, sticky CTA in DOM, vignettes gone.
+- **Adversarial pass (4 dims — scene/responsive, a11y, copy+i18n, regression):** all **SHIP**, 0 P0/0 P1.
+- **P2 — both fixed:** (1) ProblemCost heading skip h2→h4 → **h3**; (2) orphaned `usePinProgress` → **deleted**.
+- **Mid-integration fix:** count-up was frozen-at-0 (height-dependent pin hook on a short section) → rewritten as an IntersectionObserver + rAF count-up.
+- **P3 fixed:** dead `[data-strip-*]`/`[data-pin-*]` CSS removed; sticky-bar/Hero-HUD collision resolved (`[data-hero-hud]` hidden on mobile); glitch-array index given `?? ` fallback.
+- **P3 deferred (noted):** THE TURN `order` ramp is front-loaded relative to the now-tall merged section (functional, polish only — could widen `vh*1.5` denom); collapsed accordion panels stay in the a11y tree (consistent with the existing FAQ pattern); mobile receipts carousel isn't keyboard-scrollable (content still in DOM); `resetScramble` in `lib/scramble.ts` is a pre-existing dead export; `nav.cta` uses the short CTA label (intentional brevity).
+
+**Gate status: PASS (code level).** Same pre-launch remainder as above (booking URL, ES native review, Lighthouse + real-browser motion pass).

@@ -1,6 +1,11 @@
 // Content layer — the single source of truth for all copy (HANDOFF §3, R2 restructure).
 // Components read from a Content object; they contain ZERO hardcoded strings.
 // EN and ES both implement this exact shape so they stay in lockstep.
+//
+// LEAN RESTRUCTURE (8 sections → 6 blocks): the old `breaking` + `systems` keys
+// merged into `breaksFixes`; `problem.vignettes` and the nested `problem.cost`
+// collapsed into a flat counter section; `process` reshaped from full phases into
+// a compact strip rendered inside the Audit block; `hero.support` removed.
 
 export type Locale = "en" | "es";
 
@@ -27,11 +32,7 @@ export interface RailTick {
   href: string;
 }
 
-export interface Vignette {
-  title: string;
-  body: string;
-}
-
+/** Block 2 — The Cost: an animated counter card. */
 export interface CostCard {
   label: string;
   value: number;
@@ -41,41 +42,40 @@ export interface CostCard {
   body: string;
 }
 
-export interface DiagCard {
-  tag: string;
-  status: Status;
-  title: string;
-  body: string;
+/**
+ * Block 3 — Breaks → Fixes: one card per breakpoint. The card presents the
+ * BREAK (status warn/crit + diagnostic) and flips/expands to the FIX (→ ok).
+ */
+export interface BreakFixCard {
+  tag: string; // "01 — INTAKE"
+  status: Status; // break severity: "warn" | "crit"
+  breakTitle: string; // "Lead Management"
+  breakBody: string; // the diagnostic
+  fixBody: string; // the system that fixes it (resolves to OK)
 }
 
-export interface SystemCard {
-  tag: string;
-  title: string;
-  body: string;
-  fixes: { tag: string; from: Status };
-}
-
+/** Block 4 — Why Raised: one side of the typical-vs-Raised comparison. */
 export interface CompareColumn {
   heading: string;
   items: string[];
   result: string;
 }
 
-export interface Phase {
+export interface Receipt {
   tag: string;
-  title: string;
-  body: string;
+  text: string;
+}
+
+/** Block 5 — the compact process strip folded into the Audit section. */
+export interface ProcessStep {
+  label: string; // "DISCOVER"
+  body: string; // one-liner
 }
 
 export interface Deliverable {
   tag: string;
   title: string;
   body: string;
-}
-
-export interface Receipt {
-  tag: string;
-  text: string;
 }
 
 export interface FaqItem {
@@ -93,44 +93,33 @@ export interface Content {
   boot: BootLine[];
   hud: { scroll: string; status: string };
 
+  /** Block 1 — Hero. */
   hero: {
     eyebrow: string;
     h1: string[];
     sub: string;
     cta: string;
-    support: string;
   };
 
+  /** Block 2 — The Cost (counters only; story vignettes removed). */
   problem: {
     eyebrow: string;
     h2: string;
     copy: string;
-    gridHeading: string;
-    vignettes: Vignette[];
-    cost: {
-      eyebrow: string;
-      h3: string;
-      copy: string;
-      cards: CostCard[];
-      footnote: string;
-    };
+    cards: CostCard[];
+    footnote: string;
   };
 
-  breaking: {
+  /** Block 3 — Breaks → Fixes (merged diagnostic sweep + systems). */
+  breaksFixes: {
     eyebrow: string;
     h2: string;
     sub: string;
-    cards: DiagCard[];
+    cta: string;
+    cards: BreakFixCard[];
   };
 
-  systems: {
-    eyebrow: string;
-    interstitial: string;
-    h2: string;
-    sub: string;
-    cards: SystemCard[];
-  };
-
+  /** Block 4 — Why Raised. */
   whyRaised: {
     eyebrow: string;
     h2: string;
@@ -142,19 +131,21 @@ export interface Content {
       eyebrow: string;
       h2: string;
       copy: string;
+      name?: string;
+      role?: string;
+      /** Path to a headshot; falls back to a monogram placeholder when empty. */
+      photo?: string;
       receipts: Receipt[];
     };
   };
 
+  /** Block 5a — the process strip (rendered inside the Audit section). */
   process: {
-    eyebrow: string;
-    h2: string;
-    sub: string;
-    phases: Phase[];
-    ongoingLabel: string;
-    ongoing: string;
+    label: string;
+    steps: ProcessStep[];
   };
 
+  /** Block 5b — the Operations Audit. */
   audit: {
     eyebrow: string;
     h2: string;
@@ -172,6 +163,7 @@ export interface Content {
     };
   };
 
+  /** Block 6 — Final CTA. `subline` doubles as the footer ribbon. */
   finalCta: {
     h2: string;
     copy: string;

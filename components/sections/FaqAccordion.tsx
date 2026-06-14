@@ -10,11 +10,22 @@ import { useState } from "react";
 export default function FaqAccordion({
   h3,
   items,
+  defaultOpen = [],
 }: {
   h3: string;
   items: { q: string; a: string }[];
+  defaultOpen?: number[];
 }) {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<Set<number>>(() => new Set(defaultOpen));
+
+  const toggle = (i: number) => {
+    setOpen((prev) => {
+      const next = new Set(prev);
+      if (next.has(i)) next.delete(i);
+      else next.add(i);
+      return next;
+    });
+  };
 
   return (
     <div id="faq" data-scene="faq" style={{ margin: "160px 0 0" }}>
@@ -37,7 +48,7 @@ export default function FaqAccordion({
       {/* Accordion list */}
       <div data-rv="" data-rv-delay="120" style={{ maxWidth: 980 }}>
         {items.map((item, i) => {
-          const isOpen = open === i;
+          const isOpen = open.has(i);
           const isLast = i === items.length - 1;
 
           return (
@@ -74,7 +85,7 @@ export default function FaqAccordion({
                 aria-expanded={isOpen}
                 aria-controls={`faq-panel-${i}`}
                 data-cursor="VIEW"
-                onClick={() => setOpen(isOpen ? null : i)}
+                onClick={() => toggle(i)}
                 style={{
                   all: "unset" as React.CSSProperties["all"],
                   display: "flex",
