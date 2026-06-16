@@ -164,6 +164,19 @@ body {
   }
 }
 
+/* Clients marquee — duplicated track scrolls one copy width for a seamless loop */
+@keyframes marqueeL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marqueeR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  [data-marquee-track] {
+    animation: none !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    transform: none !important;
+    justify-content: center;
+  }
+}
+
 /* hide native cursor only on fine pointers (custom cursor) */
 @media (pointer: fine) {
   body[data-cursor-active="1"],

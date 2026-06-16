@@ -146,6 +146,14 @@ export interface Content {
     };
   };
 
+  /** "Worked with" — client/collaborator roster (names; logos can come later). */
+  clients: {
+    eyebrow: string;
+    h2: string;
+    sub?: string;
+    names: string[];
+  };
+
   process: {
     eyebrow: string;
     h2: string;

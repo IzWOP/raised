@@ -344,6 +344,26 @@ export const es: Content = {
     },
   },
 
+  clients: {
+    eyebrow: "TRABAJÉ CON",
+    h2: "Algunos de los equipos con los que he construido sistemas.",
+    sub: "Una muestra de las agencias, SaaS y empresas de servicios detrás del trabajo.",
+    names: [
+      "Acme",
+      "Globex",
+      "Initech",
+      "Umbrella Corp",
+      "Hooli",
+      "Soylent",
+      "Stark Industries",
+      "Wayne Enterprises",
+      "Massive Dynamic",
+      "Cyberdyne",
+      "Pied Piper",
+      "Wonka Industries",
+    ],
+  },
+
   finalCta: {
     h2: "No necesitas más herramientas. Necesitas un sistema.",
     copy: "Tu stack está bien. Lo que falta es la arquitectura por debajo — los flujos de trabajo, la automatización y la visibilidad que hacen que las herramientas actúen como un solo negocio en vez de diez pestañas. Eso es lo que construimos. Y te mostraremos la prueba en un tablero.",
