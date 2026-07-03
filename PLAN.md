@@ -90,8 +90,19 @@ proxy middleware). Scene state machine wired (Phase 2 folded into the real secti
 styles (grids stack, beats unpin, no horizontal overflow).
 
 Known not-yet-done: Lighthouse not measured (needs a real browser / deploy preview);
-scene motion + reveals + magnetic CTA not visually verified (preview MCP is a hidden tab —
-no rAF/WebGL). Phase 6 (deploy) pending. Booking URL still a placeholder (`#audit`/`#final`).
+scene motion + reveals + magnetic CTA not visually verified in the intended GPU/rAF path
+(the static-DOM intake terminal HAS been verified in a real headless Chromium — see below).
+Phase 6 (deploy) pending.
+
+### Conversion endpoint — audit intake (built + verified)
+The old `#audit`↔`#final` CTA loop had no booking mechanism. Replaced with an on-brand
+**audit-intake terminal** at `#final` (`components/sections/AuditIntake.tsx`), posting to
+`app/api/audit/route.ts` (validate → forward to `AUDIT_WEBHOOK_URL`; JSON + no-JS form
+fallback). Hero/Nav/Audit CTAs all funnel there. Verified end-to-end against `next start`:
+SSR renders the form; valid JSON → 200; invalid/missing → 400; no-JS form POST → 303 to
+`?audit=received|error#final`; webhook forwarding delivers the enriched payload; real-browser
+(Chromium) fill→submit→success flow renders the boot-style confirmation. Remaining config:
+set `AUDIT_WEBHOOK_URL` before launch.
 
 ### Review Loop result (section mode — reconcile build vs PLAN/HANDOFF/KICKOFF)
 Done-condition: all 8 sections present + content-driven + correctly anchored; scene state

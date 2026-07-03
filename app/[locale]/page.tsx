@@ -26,7 +26,7 @@ export default async function LocalePage({
       <WhyRaisedSection whyRaised={content.whyRaised} />
       <ProcessSection process={content.process} />
       <AuditSection audit={content.audit} />
-      <FinalCtaSection finalCta={content.finalCta} />
+      <FinalCtaSection finalCta={content.finalCta} locale={locale} />
     </>
   );
 }

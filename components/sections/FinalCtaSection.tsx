@@ -1,17 +1,19 @@
 "use client";
 
 import { useRef } from "react";
-import type { Content } from "@/lib/content/types";
+import type { Content, Locale } from "@/lib/content/types";
 import HUDLabel from "@/components/ui/HUDLabel";
-import CTAButton from "@/components/ui/CTAButton";
+import AuditIntake from "@/components/sections/AuditIntake";
 import { useReveal } from "@/lib/useReveal";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function FinalCtaSection({
   finalCta,
+  locale,
 }: {
   finalCta: Content["finalCta"];
+  locale: Locale;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -77,14 +79,12 @@ export default function FinalCtaSection({
           {finalCta.copy}
         </p>
 
-        {/* CTA wrapper */}
-        <div data-rv="" data-rv-delay="200" style={{ marginTop: 44 }}>
-          <CTAButton label={finalCta.cta} href="#audit" variant="final" />
-        </div>
+        {/* Intake terminal — the conversion endpoint */}
+        <AuditIntake intake={finalCta.intake} locale={locale} />
 
         {/* Subline */}
         <div data-rv="" data-rv-delay="280">
-          <HUDLabel size={12} color="#5F5F5F" style={{ marginTop: 34 }}>
+          <HUDLabel size={12} color="#5F5F5F" style={{ marginTop: 40 }}>
             {finalCta.subline}
           </HUDLabel>
         </div>

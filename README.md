@@ -48,6 +48,7 @@ npx eslint .     # lint
 app/
   [locale]/layout.tsx     # root layout: fonts, <html lang>, SiteChrome, <main>, generateMetadata (hreflang)
   [locale]/page.tsx       # renders the 8 sections from getContent(locale)
+  api/audit/route.ts      # audit-intake handler: validates + forwards to AUDIT_WEBHOOK_URL (JSON + no-JS form fallback)
   globals.css             # Tailwind v4 @theme tokens, keyframes, mobile + reduced-motion rules
 proxy.ts                  # locale middleware: cookie → geo (x-vercel-ip-country) → Accept-Language → en
 lib/
@@ -58,7 +59,7 @@ lib/
   scramble.ts             # nav / CTA text scramble
 components/
   scene/                  # SceneRoot (gate), SceneCanvas (R3F), Field (the render loop), SceneFallback
-  sections/               # Hero, ProblemCost, Breaking, Systems, WhyRaised, Process, Audit (+FaqAccordion), FinalCta
+  sections/               # Hero, ProblemCost, Breaking, Systems, WhyRaised, Process, Audit (+FaqAccordion), FinalCta (+AuditIntake)
   ui/                     # CTAButton, Cursor, SectionHeader, HUDLabel, StatusDot, Container
   Nav, ScrollRail, Grain, BootSequence, SmoothScroll, Footer, SiteChrome, LocaleSwitcher
 reference/                # HANDOFF.md (spec), KICKOFF.md (brief), prototype.decoded.html (source of truth), BUILD_NOTES.md
@@ -95,16 +96,30 @@ lattice; the Hero `<h1>` is **visible by default** (CSS-only entrance) so it nev
 
 ---
 
+## Conversion — the audit intake
+
+Every CTA (Hero, Nav, Audit) funnels to `#final`, where the page **delivers the payoff itself**
+instead of bouncing to a third-party scheduler: an on-brand **audit-intake terminal**
+(`components/sections/AuditIntake.tsx`) collects name / company / email / team size / stack /
+bottleneck, then runs a boot-style `AUDIT REQUEST RECEIVED → ROUTING TO OPERATOR → QUEUED`
+confirmation. Submissions POST to `app/api/audit/route.ts`, which validates and forwards the
+request to whatever `AUDIT_WEBHOOK_URL` points at (Slack / CRM / Zapier / n8n). The form is
+progressively enhanced — it submits via `fetch` when JS runs, and falls back to a native form
+POST + redirect (`?audit=received|error#final`) when it doesn't.
+
 ## Deployment (Vercel)
 
-Auto-detected as Next.js — no config needed. Useful env var:
+Auto-detected as Next.js — no config needed. Env vars:
 
 - `NEXT_PUBLIC_SITE_URL` — absolute base for canonical/hreflang (defaults to `https://raisedagency.com`).
+- `AUDIT_WEBHOOK_URL` — destination for audit-intake submissions (a Slack/CRM/Zapier incoming
+  webhook). **Set this before launch** — without it, requests are accepted and logged server-side
+  but not delivered anywhere.
 
 ## Configuration TODO before launch
 
-- **Booking URL:** CTAs currently point to in-page anchors (`#audit` / `#final`). Wire the real
-  Cal.com / Calendly link — it's a single prop on `CTAButton`.
+- **Audit intake destination:** set `AUDIT_WEBHOOK_URL` so submissions actually reach you. The
+  route (`app/api/audit/route.ts`) already validates and forwards; it just needs somewhere to send.
 - **Pricing:** `audit.pricing` in the content layer is intentionally empty (renders nothing); fill when ready.
 - **Spanish:** seeded from the prototype in operator voice — have a native speaker review `lib/content/es.ts`.
 - **Lighthouse:** target ≥90 desktop / ≥80 mobile — run against a deploy preview.

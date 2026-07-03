@@ -68,7 +68,7 @@ export default function Nav({
 
         <LocaleSwitcher locale={locale} />
 
-        <CTAButton label={nav.cta} href="#audit" variant="nav" />
+        <CTAButton label={nav.cta} href="#final" variant="nav" />
       </div>
     </nav>
   );
