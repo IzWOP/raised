@@ -347,8 +347,43 @@ export const es: Content = {
   finalCta: {
     h2: "No necesitas más herramientas. Necesitas un sistema.",
     copy: "Tu stack está bien. Lo que falta es la arquitectura por debajo — los flujos de trabajo, la automatización y la visibilidad que hacen que las herramientas actúen como un solo negocio en vez de diez pestañas. Eso es lo que construimos. Y te mostraremos la prueba en un tablero.",
-    cta: "Reserva una Auditoría de Operaciones",
     subline: "AUDITORÍA → HOJA DE RUTA → CONSTRUIR → MEDIR",
+    intake: {
+      terminalTitle: "AUDIT.INTAKE — ESPERANDO SEÑAL",
+      fields: {
+        name: { label: "Nombre", placeholder: "Jordan Rivera" },
+        company: { label: "Empresa", placeholder: "Operaciones Acme" },
+        email: { label: "Email de trabajo", placeholder: "tu@empresa.com" },
+        teamSize: {
+          label: "Tamaño del equipo",
+          placeholder: "Elige un rango",
+          options: ["1–4", "5–15", "16–30", "31–50", "50+"],
+        },
+        stack: {
+          label: "Stack actual",
+          placeholder: "HubSpot, Slack, Notion… (opcional)",
+        },
+        bottleneck: {
+          label: "¿Dónde duele más?",
+          placeholder:
+            "El lead que esperó tres días. El reporte que se rehace cada viernes. El traspaso que nadie asume.",
+        },
+      },
+      submit: "Transmitir solicitud",
+      submitting: "Transmitiendo",
+      consent: "Sin presentación de ventas. Sin spam. Un operador lee cada solicitud.",
+      success: {
+        lines: [
+          "› SOLICITUD DE AUDITORÍA RECIBIDA",
+          "› ENRUTANDO AL OPERADOR",
+          "SYS.STATUS — EN COLA",
+        ],
+        heading: "Solicitud recibida.",
+        body: "Te respondemos en un día hábil con los siguientes pasos — normalmente una llamada corta para definir el alcance de tu Auditoría de Operaciones. Revisa tu correo (y el spam, por si acaso).",
+      },
+      error:
+        "La transmisión falló. Inténtalo de nuevo o escríbenos a hello@raisedagency.com.",
+    },
   },
 
   footer: {

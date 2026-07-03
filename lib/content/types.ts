@@ -83,6 +83,40 @@ export interface FaqItem {
   a: string;
 }
 
+export interface IntakeField {
+  label: string;
+  placeholder: string;
+}
+
+/** The audit-intake terminal — the site's conversion endpoint (replaces a bare booking link). */
+export interface Intake {
+  /** HUD header on the terminal card, e.g. "AUDIT.INTAKE — AWAITING SIGNAL" */
+  terminalTitle: string;
+  fields: {
+    name: IntakeField;
+    company: IntakeField;
+    email: IntakeField;
+    teamSize: IntakeField & { options: string[] };
+    stack: IntakeField;
+    bottleneck: IntakeField;
+  };
+  /** submit button label (idle) */
+  submit: string;
+  /** submit button label while the request is in flight */
+  submitting: string;
+  /** small print under the button */
+  consent: string;
+  /** boot-style confirmation shown on success */
+  success: {
+    /** mono terminal lines revealed in sequence (last renders in status-ok green) */
+    lines: string[];
+    heading: string;
+    body: string;
+  };
+  /** shown when the transmission fails */
+  error: string;
+}
+
 export interface Content {
   meta: {
     title: string;
@@ -175,8 +209,8 @@ export interface Content {
   finalCta: {
     h2: string;
     copy: string;
-    cta: string;
     subline: string;
+    intake: Intake;
   };
 
   footer: {

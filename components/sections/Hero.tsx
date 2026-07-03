@@ -145,7 +145,7 @@ export default function Hero({
         </p>
 
         <div className="hero-fade" style={{ marginTop: 40, animationDelay: "1.72s" }}>
-          <CTAButton label={hero.cta} href="#audit" variant="hero" />
+          <CTAButton label={hero.cta} href="#final" variant="hero" />
         </div>
 
         <p

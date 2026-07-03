@@ -345,8 +345,43 @@ export const en: Content = {
   finalCta: {
     h2: "You don't need more tools. You need a system.",
     copy: "Your stack is fine. What's missing is the architecture underneath it — the workflows, automation, and visibility that make the tools act like one business instead of ten tabs. That's what we build. And we'll show you the proof on a dashboard.",
-    cta: "Book an Operations Audit",
     subline: "AUDIT → ROADMAP → BUILD → MEASURE",
+    intake: {
+      terminalTitle: "AUDIT.INTAKE — AWAITING SIGNAL",
+      fields: {
+        name: { label: "Name", placeholder: "Jordan Rivera" },
+        company: { label: "Company", placeholder: "Acme Operations" },
+        email: { label: "Work email", placeholder: "you@company.com" },
+        teamSize: {
+          label: "Team size",
+          placeholder: "Select range",
+          options: ["1–4", "5–15", "16–30", "31–50", "50+"],
+        },
+        stack: {
+          label: "Current stack",
+          placeholder: "HubSpot, Slack, Notion… (optional)",
+        },
+        bottleneck: {
+          label: "Where does it hurt most?",
+          placeholder:
+            "The lead that sat for three days. The Friday report rebuild. The handoff nobody owns.",
+        },
+      },
+      submit: "Transmit Audit Request",
+      submitting: "Transmitting",
+      consent: "No pitch deck. No spam. One operator reads every request.",
+      success: {
+        lines: [
+          "› AUDIT REQUEST RECEIVED",
+          "› ROUTING TO OPERATOR",
+          "SYS.STATUS — QUEUED",
+        ],
+        heading: "Request received.",
+        body: "We'll come back within one business day with next steps — usually a short call to scope your Operations Audit. Check your inbox (and spam, just in case).",
+      },
+      error:
+        "Transmission failed. Try again, or email hello@raisedagency.com directly.",
+    },
   },
 
   footer: {
