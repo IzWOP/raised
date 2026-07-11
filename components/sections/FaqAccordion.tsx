@@ -103,7 +103,7 @@ export default function FaqAccordion({
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: 16,
-                    color: "#8C8C8C",
+                    color: "var(--color-text-mid)",
                     flexShrink: 0,
                     transition: "transform 0.4s var(--ease-brand)",
                     transform: `rotate(${isOpen ? 45 : 0}deg)`,
@@ -130,7 +130,7 @@ export default function FaqAccordion({
                       fontFamily: "var(--font-body)",
                       fontSize: 15.5,
                       lineHeight: 1.65,
-                      color: "#8C8C8C",
+                      color: "var(--color-text-mid)",
                       margin: 0,
                       padding: "0 60px 26px 0",
                     }}

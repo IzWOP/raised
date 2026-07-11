@@ -54,7 +54,7 @@ export default function ProcessSection({
                   background: "rgba(255,255,255,0.25)",
                 }}
               />
-              <HUDLabel size={12} color="#8C8C8C">
+              <HUDLabel size={12} color="var(--color-text-mid)">
                 {process.eyebrow}
               </HUDLabel>
             </div>
@@ -84,7 +84,7 @@ export default function ProcessSection({
                 fontFamily: "var(--font-body)",
                 fontSize: 15,
                 lineHeight: 1.6,
-                color: "#5F5F5F",
+                color: "#767676",
                 margin: "24px 0 0",
               }}
             >
@@ -128,7 +128,7 @@ export default function ProcessSection({
                 </div>
 
                 {/* Mono tag */}
-                <HUDLabel size={11} color="#5F5F5F">
+                <HUDLabel size={11} color="#767676">
                   {phase.tag}
                 </HUDLabel>
 
@@ -152,7 +152,7 @@ export default function ProcessSection({
                     fontFamily: "var(--font-body)",
                     fontSize: 16,
                     lineHeight: 1.6,
-                    color: "#8C8C8C",
+                    color: "var(--color-text-mid)",
                     margin: "14px 0 0",
                     maxWidth: 520,
                   }}
@@ -184,7 +184,7 @@ export default function ProcessSection({
             maxWidth: 860,
           }}
         >
-          <HUDLabel size={11} color="#5F5F5F" style={{ flexShrink: 0 }}>
+          <HUDLabel size={11} color="#767676" style={{ flexShrink: 0 }}>
             {process.ongoingLabel}
           </HUDLabel>
           <p
@@ -192,7 +192,7 @@ export default function ProcessSection({
               fontFamily: "var(--font-body)",
               fontSize: 15.5,
               lineHeight: 1.6,
-              color: "#8C8C8C",
+              color: "var(--color-text-mid)",
               margin: 0,
             }}
           >

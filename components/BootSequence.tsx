@@ -76,7 +76,7 @@ export default function BootSequence({ lines }: { lines: BootLine[] }) {
           fontSize: 12,
           letterSpacing: "0.18em",
           textTransform: "uppercase",
-          color: "#8C8C8C",
+          color: "var(--color-text-mid)",
           display: "flex",
           flexDirection: "column",
           gap: 11,

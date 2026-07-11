@@ -22,7 +22,7 @@ const labelStyle: React.CSSProperties = {
   fontSize: 11,
   letterSpacing: "0.16em",
   textTransform: "uppercase",
-  color: "#5F5F5F",
+  color: "#767676",
   marginBottom: 9,
 };
 
@@ -118,7 +118,7 @@ export default function AuditIntake({
           pulseDur={2.4}
           size={7}
         />
-        <HUDLabel size={12} color="#8C8C8C" style={{ marginLeft: 10 }}>
+        <HUDLabel size={12} color="var(--color-text-mid)" style={{ marginLeft: 10 }}>
           {intake.terminalTitle}
         </HUDLabel>
       </div>
@@ -132,7 +132,7 @@ export default function AuditIntake({
                 fontSize: 12,
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
-                color: "#8C8C8C",
+                color: "var(--color-text-mid)",
                 display: "flex",
                 flexDirection: "column",
                 gap: 10,
@@ -175,7 +175,7 @@ export default function AuditIntake({
                 fontFamily: "var(--font-body)",
                 fontSize: 16,
                 lineHeight: 1.6,
-                color: "#8C8C8C",
+                color: "var(--color-text-mid)",
                 margin: "14px 0 0",
                 maxWidth: 440,
               }}
@@ -348,7 +348,7 @@ export default function AuditIntake({
 
             <HUDLabel
               size={11}
-              color="#5F5F5F"
+              color="#767676"
               style={{ letterSpacing: "0.1em", textAlign: "center", marginTop: 2 }}
             >
               {intake.consent}

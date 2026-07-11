@@ -122,7 +122,7 @@ export default function WhyRaisedSection({
                 fontSize: 12,
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                color: "#5F5F5F",
+                color: "#767676",
                 marginBottom: 30,
               }}
             >
@@ -159,7 +159,7 @@ export default function WhyRaisedSection({
                       fontFamily: "var(--font-body)",
                       fontSize: 15.5,
                       lineHeight: 1.55,
-                      color: "#8C8C8C",
+                      color: "var(--color-text-mid)",
                     }}
                   >
                     {item}
@@ -176,7 +176,7 @@ export default function WhyRaisedSection({
                 borderTop: "1px solid rgba(255,255,255,0.08)",
               }}
             >
-              <HUDLabel size={11} color="#5F5F5F">
+              <HUDLabel size={11} color="#767676">
                 {whyRaised.resultLabel}
               </HUDLabel>
               <p
@@ -184,7 +184,7 @@ export default function WhyRaisedSection({
                   fontFamily: "var(--font-body)",
                   fontSize: 15.5,
                   lineHeight: 1.6,
-                  color: "#8C8C8C",
+                  color: "var(--color-text-mid)",
                   margin: "10px 0 0",
                 }}
               >
@@ -282,7 +282,7 @@ export default function WhyRaisedSection({
                 borderTop: "1px solid rgba(255,255,255,0.08)",
               }}
             >
-              <HUDLabel size={11} color="#8C8C8C">
+              <HUDLabel size={11} color="var(--color-text-mid)">
                 {whyRaised.resultLabel}
               </HUDLabel>
               <p
@@ -340,7 +340,7 @@ export default function WhyRaisedSection({
                     fontFamily: "var(--font-mono)",
                     fontSize: 11,
                     letterSpacing: "0.18em",
-                    color: "#5F5F5F",
+                    color: "#767676",
                     flexShrink: 0,
                     width: 44,
                   }}
