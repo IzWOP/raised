@@ -151,7 +151,8 @@ export interface Content {
     eyebrow: string;
     h2: string;
     sub?: string;
-    names: string[];
+    /** logo is a public path (e.g. /clients/acme.svg); wordmark text renders until it exists */
+    items: { name: string; logo?: string }[];
   };
 
   process: {
