@@ -5,7 +5,7 @@ import ProblemCostSection from "@/components/sections/ProblemCostSection";
 import BreakingSection from "@/components/sections/BreakingSection";
 import SystemsSection from "@/components/sections/SystemsSection";
 import WhyRaisedSection from "@/components/sections/WhyRaisedSection";
-import ClientsSection from "@/components/sections/ClientsSection";
+// import ClientsSection from "@/components/sections/ClientsSection";
 import ProcessSection from "@/components/sections/ProcessSection";
 import AuditSection from "@/components/sections/AuditSection";
 import FinalCtaSection from "@/components/sections/FinalCtaSection";
@@ -25,7 +25,9 @@ export default async function LocalePage({
       <BreakingSection breaking={content.breaking} />
       <SystemsSection systems={content.systems} />
       <WhyRaisedSection whyRaised={content.whyRaised} />
-      <ClientsSection clients={content.clients} />
+      {/* HIDDEN until real roster + logos land — uncomment this and the
+          ClientsSection import above to re-enable. */}
+      {/* <ClientsSection clients={content.clients} /> */}
       <ProcessSection process={content.process} />
       <AuditSection audit={content.audit} />
       <FinalCtaSection finalCta={content.finalCta} />
