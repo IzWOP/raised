@@ -342,6 +342,28 @@ export const en: Content = {
     },
   },
 
+  clients: {
+    eyebrow: "WORKED WITH",
+    h2: "Some of the teams I've built systems with.",
+    sub: "A cross-section of the agencies, SaaS, and service businesses behind the work.",
+    // PLACEHOLDER roster — swap in real clients; add `logo: "/clients/<file>.svg"`
+    // per item once the logo file exists in /public/clients (text renders until then)
+    items: [
+      { name: "Acme" },
+      { name: "Globex" },
+      { name: "Initech" },
+      { name: "Umbrella Corp" },
+      { name: "Hooli" },
+      { name: "Soylent" },
+      { name: "Stark Industries" },
+      { name: "Wayne Enterprises" },
+      { name: "Massive Dynamic" },
+      { name: "Cyberdyne" },
+      { name: "Pied Piper" },
+      { name: "Wonka Industries" },
+    ],
+  },
+
   finalCta: {
     h2: "You don't need more tools. You need a system.",
     copy: "Your stack is fine. What's missing is the architecture underneath it — the workflows, automation, and visibility that make the tools act like one business instead of ten tabs. That's what we build. And we'll show you the proof on a dashboard.",

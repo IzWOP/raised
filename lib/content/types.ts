@@ -180,6 +180,15 @@ export interface Content {
     };
   };
 
+  /** "Worked with" — client/collaborator roster (names; logos can come later). */
+  clients: {
+    eyebrow: string;
+    h2: string;
+    sub?: string;
+    /** logo is a public path (e.g. /clients/acme.svg); wordmark text renders until it exists */
+    items: { name: string; logo?: string }[];
+  };
+
   process: {
     eyebrow: string;
     h2: string;
