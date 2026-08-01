@@ -86,21 +86,21 @@ export default function Hero({
       {/* bottom-left HUD status */}
       <div style={{ position: "absolute", bottom: 48, left: 76, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ display: "block", width: 6, height: 6, borderRadius: "50%", background: "#7fae8a", animation: "pulse 2.4s ease-in-out infinite" }} />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#5F5F5F" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#767676" }}>
           {hud.status}
         </span>
       </div>
 
       {/* bottom-right scroll cue */}
       <div style={{ position: "absolute", bottom: 48, right: 76, display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#5F5F5F" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "#767676" }}>
           {hud.scroll}
         </span>
         <span style={{ display: "block", width: 1, height: 28, background: "linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0))", animation: "pulse 2s ease-in-out infinite" }} />
       </div>
 
       <div style={{ maxWidth: 1000, textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "#8C8C8C", minHeight: 18 }}>
+        <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--color-text-mid)", minHeight: 18 }}>
           <span ref={eyebrowRef}>{hero.eyebrow}</span>
           <span ref={caretRef} style={{ color: "#D9D9D9", animation: "blink 0.9s step-end infinite" }}>_</span>
         </div>
@@ -135,7 +135,7 @@ export default function Hero({
             fontFamily: "var(--font-body)",
             fontSize: 18,
             lineHeight: 1.55,
-            color: "#8C8C8C",
+            color: "var(--color-text-mid)",
             maxWidth: 680,
             margin: "28px 0 0",
             animationDelay: "1.55s",
@@ -153,7 +153,7 @@ export default function Hero({
           style={{
             fontFamily: "var(--font-body)",
             fontSize: 14,
-            color: "#5F5F5F",
+            color: "#767676",
             margin: "26px 0 0",
             animationDelay: "1.9s",
           }}

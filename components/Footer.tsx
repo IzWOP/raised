@@ -27,10 +27,10 @@ export default function Footer({ footer }: { footer: Content["footer"] }) {
         />
 
         <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
-          <HUDLabel size={11} color="#5F5F5F">
+          <HUDLabel size={11} color="#767676">
             {footer.domain}
           </HUDLabel>
-          <HUDLabel size={11} color="#5F5F5F">
+          <HUDLabel size={11} color="#767676">
             {footer.copyright}
           </HUDLabel>
         </div>

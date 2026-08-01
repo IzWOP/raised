@@ -69,7 +69,7 @@ export default function ScrollRail({ ticks }: { ticks: RailTick[] }) {
                 fontFamily: "var(--font-mono)",
                 fontSize: 9,
                 letterSpacing: "0.18em",
-                color: "#8C8C8C",
+                color: "var(--color-text-mid)",
                 opacity: on ? 1 : 0,
                 transition: "opacity 0.3s",
                 whiteSpace: "nowrap",

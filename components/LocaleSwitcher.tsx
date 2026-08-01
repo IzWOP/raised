@@ -33,7 +33,7 @@ export default function LocaleSwitcher({ locale }: { locale: Locale }) {
           cursor: "pointer",
           padding: "4px 7px",
           borderRadius: 5,
-          color: locale === "en" ? "#FFFFFF" : "#5F5F5F",
+          color: locale === "en" ? "#FFFFFF" : "#767676",
         }}
       >
         EN
@@ -50,7 +50,7 @@ export default function LocaleSwitcher({ locale }: { locale: Locale }) {
           cursor: "pointer",
           padding: "4px 7px",
           borderRadius: 5,
-          color: locale === "es" ? "#FFFFFF" : "#5F5F5F",
+          color: locale === "es" ? "#FFFFFF" : "#767676",
         }}
       >
         ES

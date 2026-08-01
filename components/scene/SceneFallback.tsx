@@ -95,7 +95,7 @@ export default function SceneFallback() {
         height="100%"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid slice"
-        style={{ display: "block" }}
+        style={{ display: "block", opacity: "var(--scene-dim)" }}
       >
         {/* Static lattice — always visible */}
         {lines.map((l, i) => (

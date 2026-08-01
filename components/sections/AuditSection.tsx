@@ -149,7 +149,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
               }}
             >
               <StatusDot status="ok" pulse pulseDur={2.4} size={7} />
-              <HUDLabel size={12} color="#8C8C8C" style={{ marginLeft: 10 }}>
+              <HUDLabel size={12} color="var(--color-text-mid)" style={{ marginLeft: 10 }}>
                 {audit.terminalTitle}
               </HUDLabel>
             </div>
@@ -205,7 +205,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
                       style={{
                         fontFamily: "var(--font-body)",
                         fontSize: 16,
-                        color: "#8C8C8C",
+                        color: "var(--color-text-mid)",
                         transition: "color 0.4s",
                         flex: 1,
                       }}
@@ -245,7 +245,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
           >
             {/* Deliverables label */}
             <div data-rv="">
-              <HUDLabel size={12} color="#8C8C8C" style={{ padding: "15px 0 1px" }}>
+              <HUDLabel size={12} color="var(--color-text-mid)" style={{ padding: "15px 0 1px" }}>
                 {audit.deliverablesLabel}
               </HUDLabel>
             </div>
@@ -258,7 +258,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
                 data-rv-delay={i === 0 ? "80" : "160"}
                 style={deliverableCardStyle}
               >
-                <HUDLabel size={11} color="#5F5F5F">
+                <HUDLabel size={11} color="#767676">
                   {deliverable.tag}
                 </HUDLabel>
                 <h3
@@ -278,7 +278,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
                     fontFamily: "var(--font-body)",
                     fontSize: 16,
                     lineHeight: 1.6,
-                    color: "#8C8C8C",
+                    color: "var(--color-text-mid)",
                     margin: "12px 0 0",
                   }}
                 >
@@ -299,7 +299,7 @@ export default function AuditSection({ audit }: { audit: Content["audit"] }) {
 
             {/* Pricing — renders nothing when empty or whitespace-only */}
             {audit.pricing?.trim() ? (
-              <HUDLabel size={11} color="#5F5F5F">
+              <HUDLabel size={11} color="#767676">
                 {audit.pricing}
               </HUDLabel>
             ) : null}
