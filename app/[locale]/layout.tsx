@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sora, Inter, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { getContent, isLocale, locales } from "@/lib/content";
+import { SITE_URL } from "@/lib/site";
 import SiteChrome from "@/components/SiteChrome";
 import Footer from "@/components/Footer";
 import { notFound } from "next/navigation";
@@ -42,7 +43,7 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const content = getContent(locale);
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://raisedagency.com"),
+    metadataBase: new URL(SITE_URL),
     title: content.meta.title,
     description: content.meta.description,
     alternates: {
