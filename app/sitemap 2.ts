@@ -5,7 +5,6 @@ import { SITE_URL } from "@/lib/site";
 const languages = {
   en: `${SITE_URL}/en`,
   es: `${SITE_URL}/es`,
-  "es-MX": `${SITE_URL}/es`,
   "x-default": `${SITE_URL}/en`,
 };
 
