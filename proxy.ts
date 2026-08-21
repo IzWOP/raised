@@ -22,12 +22,30 @@ function detectLocale(request: NextRequest): "en" | "es" {
   return "en";
 }
 
+// Locale-tag variants we recognize but don't serve directly.
+// Maps the first path segment (lowercased) to the real locale.
+function aliasLocale(segment: string): "en" | "es" | null {
+  if (segment === "mx") return "es";
+  const match = /^(en|es)-[a-z]{2,4}$/.exec(segment);
+  return match ? (match[1] as "en" | "es") : null;
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Already localized — pass through
   if (/^\/(en|es)(\/|$)/.test(pathname)) {
     return NextResponse.next();
+  }
+
+  // Variant locale tags (/es-mx, /es-MX, /en-US, /mx) → permanent
+  // redirect to the real locale, preserving any remaining path.
+  const [, firstSegment = "", ...rest] = pathname.split("/");
+  const alias = aliasLocale(firstSegment.toLowerCase());
+  if (alias) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${alias}${rest.length ? `/${rest.join("/")}` : ""}`;
+    return NextResponse.redirect(url, 308);
   }
 
   const locale = detectLocale(request);
