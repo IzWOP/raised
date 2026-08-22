@@ -17,6 +17,42 @@ interface Payload {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Generous ceilings for legitimate humans; walls for bots pumping payloads
+// through to the webhook destination.
+const MAX_LEN: Record<keyof Payload, number> = {
+  name: 200,
+  company: 200,
+  email: 320,
+  teamSize: 100,
+  stack: 2000,
+  bottleneck: 5000,
+  locale: 10,
+};
+
+function firstOverlongField(p: Payload): string | null {
+  for (const [field, max] of Object.entries(MAX_LEN)) {
+    const value = p[field as keyof Payload];
+    if (typeof value === "string" && value.length > max) return field;
+  }
+  return null;
+}
+
+// Per-IP rate limit. In-memory, so it resets on cold start and is per-instance —
+// not airtight, but it blunts naive spam loops at zero infra cost.
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 5;
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (recent.length >= RATE_MAX) return true;
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 10_000) hits.clear(); // memory backstop
+  return false;
+}
+
 /** Returns the name of the first invalid required field, or null when valid. */
 function firstInvalidField(p: Payload): string | null {
   if (!p.name?.trim()) return "name";
@@ -72,6 +108,15 @@ function str(value: FormDataEntryValue | null): string | undefined {
 }
 
 export async function POST(request: NextRequest) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  if (rateLimited(ip)) {
+    return NextResponse.json(
+      { ok: false, error: "rate_limited" },
+      { status: 429 },
+    );
+  }
+
   const contentType = request.headers.get("content-type") ?? "";
   // No-JS fallback: a native <form> submit arrives url-encoded and expects a redirect.
   const isFormPost =
@@ -107,6 +152,16 @@ export async function POST(request: NextRequest) {
       new URL(`/${locale}?audit=${status}#final`, request.url),
       303,
     );
+
+  const overlong = firstOverlongField(payload);
+  if (overlong) {
+    return isFormPost
+      ? back("error")
+      : NextResponse.json(
+          { ok: false, error: "too_long", field: overlong },
+          { status: 400 },
+        );
+  }
 
   const invalid = firstInvalidField(payload);
   if (invalid) {
