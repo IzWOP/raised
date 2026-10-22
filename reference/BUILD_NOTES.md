@@ -2,8 +2,8 @@
 
 You are building the production Raised Agency site. The **design source of truth** is the
 decoded prototype at `reference/prototype.decoded.html` — open it and match it 1:1 (exact
-copy, spacing, colors, motion). The spec is `reference/HANDOFF.md`. The phase plan is
-`PLAN.md` at repo root.
+copy, spacing, colors, motion). The spec is `reference/HANDOFF.md`. (The phase plan, PLAN.md, was
+deleted on 2026-10-22 after every checkpoint shipped; git history has it.)
 
 ## Stack
 Next.js 16 (App Router, Turbopack) · React 19 · TypeScript · Tailwind v4 · React Three
