@@ -14,7 +14,7 @@ interface HUDLabelProps {
 export default function HUDLabel({
   children,
   size = 12,
-  color = "#8C8C8C",
+  color = "var(--color-text-mid)",
   className,
   style,
 }: HUDLabelProps) {

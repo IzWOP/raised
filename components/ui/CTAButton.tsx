@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { scrambleReveal } from "@/lib/scramble";
 
 type Variant = "hero" | "nav" | "audit" | "final";
 
@@ -57,7 +56,6 @@ export default function CTAButton({
   withArrow?: boolean;
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
-  const labelRef = useRef<HTMLSpanElement>(null);
   const reduced = useRef(false);
 
   useEffect(() => {
@@ -92,7 +90,6 @@ export default function CTAButton({
   };
   const onEnter = () => {
     if (reduced.current) return;
-    if (labelRef.current) scrambleReveal(labelRef.current);
     if (variant === "nav" && ref.current)
       ref.current.style.boxShadow = "var(--shadow-glow)";
   };
@@ -107,7 +104,7 @@ export default function CTAButton({
       onMouseLeave={onLeave}
       style={{ ...base, ...variantStyle[variant] }}
     >
-      <span ref={labelRef} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+      <span style={{ display: "inline-block", whiteSpace: "nowrap" }}>
         {label}
       </span>
       {withArrow && <span aria-hidden="true">→</span>}

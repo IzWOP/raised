@@ -56,7 +56,7 @@ export default function SectionHeader({
             fontSize: 12,
             letterSpacing: "0.18em",
             textTransform: "uppercase",
-            color: "#8C8C8C",
+            color: "var(--color-text-mid)",
           }}
         >
           {eyebrow}
@@ -90,7 +90,7 @@ export default function SectionHeader({
             fontFamily: "var(--font-body)",
             fontSize: 17,
             lineHeight: 1.6,
-            color: "#8C8C8C",
+            color: "var(--color-text-mid)",
             margin: "24px 0 0",
             ...(maxWidthSub != null ? { maxWidth: maxWidthSub } : {}),
           }}

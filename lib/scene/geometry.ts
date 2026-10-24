@@ -108,11 +108,13 @@ function buildGeometry(): SceneGeometry {
     }
   }
 
+  // Fewer / slower than the prototype's 64 @ 0.18–0.58 — the full swarm competed
+  // with the copy for attention.
   const packets: Packet[] = [];
-  for (let i = 0; i < 64; i++) {
+  for (let i = 0; i < 40; i++) {
     packets.push({
       t: rnd(),
-      sp: 0.18 + rnd() * 0.4,
+      sp: 0.13 + rnd() * 0.28,
       ph: rnd() * 6.283,
       ci: (rnd() * chaosEdges.length) | 0,
       li: (rnd() * latticeEdges.length) | 0,

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import type { NavContent, Locale } from "@/lib/content/types";
-import { scrambleNav } from "@/lib/scramble";
 import CTAButton from "./ui/CTAButton";
 import LocaleSwitcher from "./LocaleSwitcher";
 
@@ -51,13 +50,12 @@ export default function Nav({
             key={l.href}
             href={l.href}
             data-cursor="VIEW"
-            onMouseEnter={(e) => scrambleNav(e.currentTarget)}
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 12,
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "#8C8C8C",
+              color: "var(--color-text-mid)",
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}

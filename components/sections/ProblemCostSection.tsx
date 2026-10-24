@@ -41,8 +41,8 @@ const vSnapSvg = (
     aria-hidden="true"
     style={{ display: "block", marginBottom: 20 }}
   >
-    <path d="M10 28 H106" stroke="#8C8C8C" strokeWidth="1.5" />
-    <circle cx="10" cy="28" r="3" fill="#8C8C8C" />
+    <path d="M10 28 H106" stroke="var(--color-text-mid)" strokeWidth="1.5" />
+    <circle cx="10" cy="28" r="3" fill="var(--color-text-mid)" />
     <g
       style={{
         transformOrigin: "108px 28px",
@@ -79,13 +79,13 @@ const vSpinSvg = (
         cx="110"
         cy="28"
         r="20"
-        stroke="#8C8C8C"
+        stroke="var(--color-text-mid)"
         strokeWidth="1.5"
         strokeDasharray="88 38"
       />
       <path
         d="M124 11 L130 14 L123 18"
-        stroke="#8C8C8C"
+        stroke="var(--color-text-mid)"
         strokeWidth="1.5"
         fill="none"
       />
@@ -114,7 +114,7 @@ const vDecaySvg = (
       width="22"
       height="12"
       rx="2"
-      fill="#8C8C8C"
+      fill="var(--color-text-mid)"
       style={{ animation: "vDecay 3.1s ease-in-out infinite" }}
     />
     <rect
@@ -123,7 +123,7 @@ const vDecaySvg = (
       width="22"
       height="12"
       rx="2"
-      fill="#8C8C8C"
+      fill="var(--color-text-mid)"
       style={{
         animation: "vDecay 4.2s ease-in-out infinite",
         animationDelay: "0.6s",
@@ -135,7 +135,7 @@ const vDecaySvg = (
       width="22"
       height="12"
       rx="2"
-      fill="#8C8C8C"
+      fill="var(--color-text-mid)"
       style={{
         animation: "vDecay 3.7s ease-in-out infinite",
         animationDelay: "1.4s",
@@ -149,7 +149,7 @@ const vDecaySvg = (
       width="22"
       height="12"
       rx="2"
-      fill="#8C8C8C"
+      fill="var(--color-text-mid)"
       style={{
         animation: "vDecay 5s ease-in-out infinite",
         animationDelay: "0.9s",
@@ -162,7 +162,7 @@ const vDecaySvg = (
       width="22"
       height="12"
       rx="2"
-      fill="#8C8C8C"
+      fill="var(--color-text-mid)"
       style={{
         animation: "vDecay 4.5s ease-in-out infinite",
         animationDelay: "2s",
@@ -275,7 +275,7 @@ export default function ProblemCostSection({
           data-rv-delay="240"
           style={{ margin: "72px 0 22px" }}
         >
-          <HUDLabel size={12} color="#5F5F5F">
+          <HUDLabel size={12} color="#767676">
             {problem.gridHeading}
           </HUDLabel>
         </div>
@@ -314,7 +314,7 @@ export default function ProblemCostSection({
                   fontFamily: "var(--font-body)",
                   fontSize: 15,
                   lineHeight: 1.6,
-                  color: "#8C8C8C",
+                  color: "var(--color-text-mid)",
                   margin: "12px 0 0",
                 }}
               >
@@ -388,7 +388,7 @@ export default function ProblemCostSection({
                     style={costCardStyle}
                   >
                     {/* label */}
-                    <HUDLabel size={11} color="#5F5F5F">
+                    <HUDLabel size={11} color="#767676">
                       {card.label}
                     </HUDLabel>
 
@@ -413,7 +413,7 @@ export default function ProblemCostSection({
                       </span>
                       {hasSiblingUnit && (
                         <span
-                          style={{ fontSize: 17, color: "#8C8C8C" }}
+                          style={{ fontSize: 17, color: "var(--color-text-mid)" }}
                         >
                           {suffix}
                         </span>
@@ -439,7 +439,7 @@ export default function ProblemCostSection({
                         fontFamily: "var(--font-body)",
                         fontSize: 14,
                         lineHeight: 1.6,
-                        color: "#8C8C8C",
+                        color: "var(--color-text-mid)",
                         margin: "10px 0 0",
                       }}
                     >
@@ -456,7 +456,7 @@ export default function ProblemCostSection({
               data-rv-delay="260"
               style={{ marginTop: 26 }}
             >
-              <HUDLabel size={10} color="#5F5F5F">
+              <HUDLabel size={10} color="#767676">
                 {problem.cost.footnote}
               </HUDLabel>
             </div>

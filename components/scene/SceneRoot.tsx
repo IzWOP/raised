@@ -66,7 +66,10 @@ export default function SceneRoot() {
   if (mode === "webgl") {
     // reduced motion → render a single static lattice frame
     return (
-      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 0 }}>
+      <div
+        aria-hidden
+        style={{ position: "fixed", inset: 0, zIndex: 0, opacity: "var(--scene-dim)" }}
+      >
         <SceneCanvas frameloop={sceneFlags.reduced ? "demand" : frameloop} />
       </div>
     );

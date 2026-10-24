@@ -71,7 +71,7 @@ export default function FinalCtaSection({
             fontFamily: "var(--font-body)",
             fontSize: 17,
             lineHeight: 1.65,
-            color: "#8C8C8C",
+            color: "var(--color-text-mid)",
             maxWidth: 640,
             margin: "28px 0 0",
           }}
@@ -84,7 +84,7 @@ export default function FinalCtaSection({
 
         {/* Subline */}
         <div data-rv="" data-rv-delay="280">
-          <HUDLabel size={12} color="#5F5F5F" style={{ marginTop: 40 }}>
+          <HUDLabel size={12} color="#767676" style={{ marginTop: 40 }}>
             {finalCta.subline}
           </HUDLabel>
         </div>

@@ -337,7 +337,7 @@ export default function BreakingSection({
                     marginBottom: 22,
                   }}
                 >
-                  <HUDLabel size={11} color="#5F5F5F">
+                  <HUDLabel size={11} color="#767676">
                     {card.tag}
                   </HUDLabel>
                   <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
@@ -386,7 +386,7 @@ export default function BreakingSection({
                     fontFamily: "var(--font-body)",
                     fontSize: 15,
                     lineHeight: 1.6,
-                    color: "#8C8C8C",
+                    color: "var(--color-text-mid)",
                     margin: "12px 0 0",
                   }}
                 >

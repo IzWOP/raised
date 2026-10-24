@@ -56,7 +56,6 @@ lib/
   scene/                  # geometry.ts (deterministic node field), params.ts (scroll→state), store.ts
   useReveal.ts            # IntersectionObserver reveal hook
   usePinProgress.ts       # sticky-pin scroll progress
-  scramble.ts             # nav / CTA text scramble
 components/
   scene/                  # SceneRoot (gate), SceneCanvas (R3F), Field (the render loop), SceneFallback
   sections/               # Hero, ProblemCost, Breaking, Systems, WhyRaised, Process, Audit (+FaqAccordion), FinalCta (+AuditIntake)
@@ -79,6 +78,11 @@ prototype's exact screen-space projection. On mobile / no-WebGL / reduced-motion
 **Tuning the field size/position:** edit `PROJ_FOCAL` / `PROJ_DIST` at the top of
 `components/scene/Field.tsx`. Larger focal &/or smaller distance → the field reads bigger / closer.
 
+**Tuning the field brightness:** `--scene-dim` in `app/globals.css` is a single opacity knob
+applied to both the WebGL canvas and the SVG fallback (1 = prototype-original intensity;
+shipped at 0.65 so copy reads over the field). A global copy halo (`text-shadow` on
+headings/paragraphs in `main`) additionally knocks the lattice back right behind glyphs.
+
 ## Content & i18n
 
 All copy lives in `lib/content/{en,es}.ts` (same `Content` shape, type-enforced). Components read
@@ -91,7 +95,7 @@ hreflang>` + canonical are emitted per locale.
 
 One `<h1>`; sections use `<h2>`/`<h3>`; the FAQ is a semantic `<button aria-expanded>` + `role="region"`
 accordion; silver focus rings; the custom cursor is `pointer: fine` only. `prefers-reduced-motion`
-disables the boot sequence, scramble, typewriter, parallax, pins and renders the scene as a static
+disables the boot sequence, typewriter, parallax, pins and renders the scene as a static
 lattice; the Hero `<h1>` is **visible by default** (CSS-only entrance) so it never depends on JS.
 
 ---

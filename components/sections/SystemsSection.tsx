@@ -114,7 +114,7 @@ export default function SystemsSection({
           fontSize: 11,
           letterSpacing: "0.18em",
           textTransform: "uppercase",
-          color: "#5F5F5F",
+          color: "#767676",
         }}
       >
         {systems.interstitial}
@@ -199,7 +199,7 @@ export default function SystemsSection({
                   }}
                 >
                   {/* Tag label */}
-                  <HUDLabel size={11} color="#5F5F5F">
+                  <HUDLabel size={11} color="#767676">
                     {card.tag}
                   </HUDLabel>
 
@@ -223,7 +223,7 @@ export default function SystemsSection({
                       fontFamily: "var(--font-body)",
                       fontSize: spec.pSize,
                       lineHeight: 1.6,
-                      color: "#8C8C8C",
+                      color: "var(--color-text-mid)",
                       margin: "14px 0 0",
                     }}
                   >
@@ -264,7 +264,7 @@ export default function SystemsSection({
                           flexShrink: 0,
                         }}
                       />
-                      <HUDLabel size={10} color="#5F5F5F">
+                      <HUDLabel size={10} color="#767676">
                         {card.fixes.tag}
                       </HUDLabel>
                     </span>
@@ -279,7 +279,7 @@ export default function SystemsSection({
                       }}
                     >
                       <span style={{ color: fromColor }}>{fromLabel}</span>
-                      <span style={{ color: "#5F5F5F" }}> → </span>
+                      <span style={{ color: "#767676" }}> → </span>
                       <span style={{ color: "#7fae8a" }}>OK</span>
                     </span>
                   </div>
